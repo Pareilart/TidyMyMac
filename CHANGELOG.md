@@ -6,6 +6,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+## [0.3.0] - 2026-10-30
+
 ### Ajouté
 
 - Historique des actions : chaque nettoyage, désinstallation, entretien et suppression d'éléments de démarrage est
