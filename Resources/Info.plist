@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>fr</string>
+	<key>CFBundleDisplayName</key>
+	<string>TidyMyMac</string>
+	<key>CFBundleExecutable</key>
+	<string>TidyMyMac</string>
+	<key>CFBundleIconFile</key>
+	<string>AppIcon</string>
+	<key>CFBundleIdentifier</key>
+	<string>io.github.tidymymac.TidyMyMac</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>fr</string>
+		<string>en</string>
+		<string>es</string>
+		<string>de</string>
+	</array>
+	<key>CFBundleName</key>
+	<string>TidyMyMac</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>TidyMyMac pilote le Finder pour vider la Corbeille, quitte Mail avant de compacter sa base et lit vos éléments de connexion via Événements système.</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>TidyMyMac indexe les fichiers du Bureau sur ce Mac pour vous permettre de les retrouver en les décrivant. L'indexation et la recherche sont 100 % locales : aucun fichier n'est envoyé à un serveur.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>TidyMyMac indexe vos documents sur ce Mac pour vous permettre de les retrouver en les décrivant. L'indexation et la recherche sont 100 % locales : aucun fichier n'est envoyé à un serveur.</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>TidyMyMac indexe vos téléchargements sur ce Mac pour vous permettre de les retrouver en les décrivant. L'indexation et la recherche sont 100 % locales : aucun fichier n'est envoyé à un serveur.</string>
+	<key>NSHighResolutionCapable</key>
+	<true/>
+	<key>NSHumanReadableCopyright</key>
+	<string>Logiciel libre sous licence MIT.</string>
+	<key>TMMReleasesRepository</key>
+	<string>Pareilart/tidyMyMac</string>
+</dict>
+</plist>

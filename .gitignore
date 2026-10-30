@@ -1,0 +1,8 @@
+.build/
+build/
+.swiftpm/
+.DS_Store
+
+# Notes de travail internes, hors dépôt
+todo-features.md
+TODO.md

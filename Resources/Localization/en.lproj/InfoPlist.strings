@@ -1,0 +1,5 @@
+/* TidyMyMac — autorisations (en) */
+"NSDocumentsFolderUsageDescription" = "TidyMyMac indexes your documents on this Mac so you can find them by describing them. Indexing and search are fully local: no file is ever sent to a server.";
+"NSDownloadsFolderUsageDescription" = "TidyMyMac indexes your downloads on this Mac so you can find them by describing them. Indexing and search are fully local: no file is ever sent to a server.";
+"NSDesktopFolderUsageDescription" = "TidyMyMac indexes the files on your Desktop on this Mac so you can find them by describing them. Indexing and search are fully local: no file is ever sent to a server.";
+"NSAppleEventsUsageDescription" = "TidyMyMac controls Finder to empty the Trash, quits Mail before compacting its database, and reads your login items from System Events.";

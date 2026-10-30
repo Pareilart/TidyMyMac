@@ -1,0 +1,5 @@
+/* TidyMyMac — autorisations (de) */
+"NSDocumentsFolderUsageDescription" = "TidyMyMac indiziert deine Dokumente auf diesem Mac, damit du sie per Beschreibung finden kannst. Indizierung und Suche sind vollständig lokal: Keine Datei wird an einen Server gesendet.";
+"NSDownloadsFolderUsageDescription" = "TidyMyMac indiziert deine Downloads auf diesem Mac, damit du sie per Beschreibung finden kannst. Indizierung und Suche sind vollständig lokal: Keine Datei wird an einen Server gesendet.";
+"NSDesktopFolderUsageDescription" = "TidyMyMac indiziert die Dateien auf deinem Schreibtisch auf diesem Mac, damit du sie per Beschreibung finden kannst. Indizierung und Suche sind vollständig lokal: Keine Datei wird an einen Server gesendet.";
+"NSAppleEventsUsageDescription" = "TidyMyMac steuert den Finder, um den Papierkorb zu leeren, beendet Mail vor dem Komprimieren der Datenbank und liest deine Anmeldeobjekte über System Events.";
