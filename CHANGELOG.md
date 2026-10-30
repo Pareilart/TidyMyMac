@@ -6,6 +6,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+## [0.2.0] - 2026-10-30
+
 ### Ajouté
 
 - Règles de nettoyage déclaratives en JSON (`Resources/Rules`) : chaque catégorie de fichiers inutiles affiche son
