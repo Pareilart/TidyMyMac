@@ -6,6 +6,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+## [0.4.0] - 2026-10-30
+
 ### Ajouté
 
 - Restauration : depuis l'Historique, remettre en place un élément ou toute une action tant que la Corbeille n'est pas
