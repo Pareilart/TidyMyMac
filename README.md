@@ -42,7 +42,7 @@
 | **Space Explorer** | See what fills your disk as bubbles or as a list, then select several items to reveal or remove. |
 | **Uninstaller** | Remove an app with its leftovers in `~/Library`, or reset an app by deleting only its data. |
 | **Performance** | Recommendations first, then detailed managers: maintenance tasks (RAM, DNS, Time Machine snapshots, Spotlight, Mail, Launch Services) with measured gains, login apps and background items. |
-| **History** | Every cleanup, uninstall and maintenance run, item by item: where each file went (Trash or deleted), what was freed over time, with CSV and JSON export. |
+| **History** | Every cleanup, uninstall and maintenance run, item by item: where each file went (Trash or deleted), what was freed over time, with CSV and JSON export. Put any item back from the Trash, or undo a whole cleanup. |
 | **Menu bar** | Live Mac health — disk, memory, CPU, battery, network with speed test, connected volumes — plus a search bar for AI Search. |
 
 After every action, TidyMyMac shows what was actually freed, along with a running total.
@@ -99,6 +99,14 @@ click to select, and move several items to the Trash at once.
 TidyMyMac keeps a local journal of everything it does: each removed item with its original path, its size and
 whether it went to the Trash or was deleted for good, plus maintenance tasks and their measured gains. Export it to
 CSV or JSON at any time.
+
+Changed your mind? As long as the Trash hasn't been emptied, put a single item or a whole cleanup back where it was —
+from the History, or with **Undo This Cleanup** right after cleaning. TidyMyMac never puts an item back over a file
+that has taken its place since.
+
+<p align="center">
+  <img src="docs/screenshots/11-undo.png" alt="Undo a cleanup">
+</p>
 
 ### Performance
 
@@ -175,6 +183,8 @@ then uses it so permissions survive rebuilds.
 - Large files, duplicates and apps always go to the **Trash**. Junk files do too by default; a setting lets you delete
   them permanently.
 - Duplicates always keep at least one copy.
+- Anything that went to the Trash can be put back from the History until you empty the Trash. TidyMyMac also tells
+  you that the space is only really freed once the Trash is emptied.
 - Nothing is removed without being listed first, with its size and location.
 - Every junk category states its risk level and what happens after removal. No rule can remove a system folder or a
   personal folder such as Documents, or sweep your whole home or Library folder.
@@ -229,7 +239,6 @@ for a text and `%lld` for a number.
 
 ## Roadmap
 
-- Undo a cleanup and put items back from the Trash, straight from the history.
 - A detailed file-by-file preview, with export, before deleting.
 - More profession profiles (musicians, 3D artists, small IT teams).
 - Visible Time Machine snapshot management and an explanation of “System Data”.

@@ -81,7 +81,11 @@ struct UninstallerView: View {
                     }
                 }
                 if let message = model.message {
-                    Text(message).font(.callout).foregroundColor(.secondary)
+                    HStack {
+                        Text(message).font(.callout).foregroundColor(.secondary)
+                        Spacer()
+                        UndoActionButton(entryID: model.lastEntryID, title: "Annuler") { model.loadLeftovers() }
+                    }
                 }
                 HStack {
                     Button("Réinitialiser l'application") {
@@ -106,6 +110,9 @@ struct UninstallerView: View {
             VStack(spacing: 8) {
                 if let message = model.message {
                     Text(message).foregroundColor(.secondary)
+                    UndoActionButton(entryID: model.lastEntryID, title: "Annuler la désinstallation") {
+                        Task { await model.load() }
+                    }
                 }
                 Text("Sélectionnez une application").foregroundColor(.secondary)
             }

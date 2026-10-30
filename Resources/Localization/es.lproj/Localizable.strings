@@ -555,3 +555,20 @@
 "… et %lld autres, dans l'export" = "… y %lld más en la exportación";
 "Exporter cette action…" = "Exportar esta acción…";
 "Voir le détail dans l'historique" = "Ver el detalle en el historial";
+
+/* Restauration */
+"%lld élément(s) remis en place." = "%lld elemento(s) devuelto(s) a su sitio.";
+"%lld élément(s) laissés dans la Corbeille : un élément du même nom est déjà à leur place." = "%lld elemento(s) se quedan en la Papelera: ya hay un elemento con el mismo nombre en su lugar.";
+"%lld élément(s) ne sont plus dans la Corbeille." = "%lld elemento(s) ya no están en la Papelera.";
+"%lld élément(s) n'ont pas pu être remis en place : utilisez « Remettre » dans la Corbeille du Finder." = "%lld elemento(s) no se pudieron devolver a su sitio: usa «Devolver» en la Papelera del Finder.";
+"Rien à remettre en place." = "No hay nada que devolver a su sitio.";
+"Remis en place" = "Devuelto a su sitio";
+"Corbeille vidée" = "Papelera vaciada";
+"Annuler la dernière suppression" = "Deshacer la última eliminación";
+"%@ · %@" = "%@ · %@";
+"Tout remettre en place" = "Devolver todo a su sitio";
+"Un élément du même nom est déjà à cet emplacement : remettez celui-ci depuis la Corbeille si besoin." = "Ya hay un elemento con el mismo nombre en esta ubicación: devuelve este desde la Papelera si hace falta.";
+"Remettre en place" = "Devolver a su sitio";
+"Annuler la désinstallation" = "Deshacer la desinstalación";
+"Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler." = "Estos elementos están en la Papelera: el espacio solo se libera cuando la vacíes. Hasta entonces, puedes deshacer.";
+"Annuler ce nettoyage" = "Deshacer esta limpieza";

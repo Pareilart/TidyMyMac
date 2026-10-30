@@ -64,6 +64,7 @@ enum ScreenshotStudio {
             .environmentObject(demo.updates)
             .environmentObject(demo.search), size: nil), framed: false, to: directory, name: "06-menu-bar")
         save(capture(SettingsView().environmentObject(demo.updates), size: nil), framed: true, to: directory, name: "07-settings")
+        save(capture(DemoModels().cleanupDone(), size: windowSize), framed: true, to: directory, name: "11-undo")
         if let rule = RuleBook.load().builtIn.first(where: { $0.id == "installers" }) {
             save(capture(RuleDetails(rule: rule).background(Theme.backgroundTop), size: nil),
                  framed: false, to: directory, name: "08-rule-details")
@@ -183,9 +184,17 @@ private final class DemoModels {
 
     private static let gigabyte: Int64 = 1_000_000_000
 
-    func window(_ module: Module) -> some View {
+    /// Écran de fin d'un nettoyage, avec « Annuler ce nettoyage ».
+    func cleanupDone() -> some View {
+        ActivityJournal.shared.showDemo()
+        junk.lastEntryID = ActivityJournal.shared.entries.first?.id
+        junk.phase = .done(freed: 13_100_000_000)
+        return window(.junk, prepare: false)
+    }
+
+    func window(_ module: Module, prepare: Bool = true) -> some View {
         navigation.selection = module
-        switch module {
+        switch prepare ? module : nil {
         case .junk: fillJunk()
         case .rules: rules.showDemo()
         case .history: ActivityJournal.shared.showDemo()

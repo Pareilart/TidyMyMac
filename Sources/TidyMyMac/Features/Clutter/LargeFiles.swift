@@ -46,6 +46,8 @@ final class LargeFilesModel: ObservableObject {
     @Published var thresholdMB = 100
     @Published var root = FS.home
     @Published var failures: [URL] = []
+    /// Dernière action enregistrée dans le journal, pour pouvoir l'annuler.
+    @Published var lastEntryID: UUID?
 
     var selectedSize: Int64 { files.reduce(0) { $1.selected ? $0 + $1.size : $0 } }
 
@@ -68,9 +70,9 @@ final class LargeFilesModel: ObservableObject {
         failures = removal.failed
         files = []
         Stats.record(freed: freed)
-        ActivityJournal.shared.recordRemoval(
+        lastEntryID = ActivityJournal.shared.recordRemoval(
             .largeFiles, removal: removal, candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
-        )
+        )?.id
         phase = .done(freed: freed)
     }
 }
@@ -130,7 +132,7 @@ struct LargeFilesView: View {
         case .cleaning:
             ProgressPrompt(text: "Déplacement vers la Corbeille…")
         case .done(let freed):
-            DonePrompt(freed: freed, failures: model.failures) { Task { await model.scan() } }
+            DonePrompt(freed: freed, failures: model.failures, entryID: model.lastEntryID) { Task { await model.scan() } }
         case .ready:
             VStack(spacing: 0) {
                 List {

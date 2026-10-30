@@ -70,6 +70,8 @@ final class AppsModel: ObservableObject {
     @Published var sortBySize = false
     @Published var leftovers: [ScanItem] = []
     @Published var message: String?
+    /// Dernière action enregistrée dans le journal, pour pouvoir l'annuler.
+    @Published var lastEntryID: UUID?
     @Published var selection: URL? {
         didSet { loadLeftovers() }
     }
@@ -85,7 +87,7 @@ final class AppsModel: ObservableObject {
         loading = false
     }
 
-    private func loadLeftovers() {
+    func loadLeftovers() {
         leftoverTask?.cancel()
         leftovers = []
         message = nil
@@ -115,7 +117,9 @@ final class AppsModel: ObservableObject {
             removal.failed = []
             removal.merge(retried)
         }
-        ActivityJournal.shared.recordRemoval(.uninstall, subject: app.name, removal: removal, candidates: candidates)
+        lastEntryID = ActivityJournal.shared.recordRemoval(
+            .uninstall, subject: app.name, removal: removal, candidates: candidates
+        )?.id
         let succeeded = removal.failed.isEmpty
         if succeeded {
             apps.removeAll { $0.id == app.id }
@@ -134,10 +138,10 @@ final class AppsModel: ObservableObject {
         let failed = removal.failed
         let freed = selected.filter { removal.removed.contains($0.url) }.totalSize
         Stats.record(freed: freed)
-        ActivityJournal.shared.recordRemoval(
+        lastEntryID = ActivityJournal.shared.recordRemoval(
             .appReset, subject: app.name, removal: removal,
             candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
-        )
+        )?.id
         loadLeftovers()
         message = failed.isEmpty
             ? localized("Les données de \(app.name) ont été placées dans la Corbeille : \(freed.formattedBytes) libérés.")

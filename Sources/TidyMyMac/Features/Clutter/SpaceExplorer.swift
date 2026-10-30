@@ -22,6 +22,8 @@ final class SpaceExplorerModel: ObservableObject {
     @Published var hovered: String?
     @Published var selection: Set<URL> = []
     @Published private(set) var lastTrashMessage: String?
+    /// Dernière action enregistrée dans le journal, pour pouvoir l'annuler.
+    @Published private(set) var lastEntryID: UUID?
     @Published var loading = false
     @Published var progress = ""
     @Published var displayMode = DisplayMode(rawValue: UserDefaults.standard.string(forKey: "spaceExplorerMode") ?? "") ?? .bubbles {
@@ -74,6 +76,12 @@ final class SpaceExplorerModel: ObservableObject {
         }
     }
 
+    /// Relit le dossier affiché, par exemple après avoir remis des éléments en place.
+    func reload() {
+        cache = [:]
+        if let current { open(current) }
+    }
+
     func up() {
         guard let current, current.path != "/" else { return }
         open(current.deletingLastPathComponent())
@@ -86,9 +94,9 @@ final class SpaceExplorerModel: ObservableObject {
         let removedURLs = Set(removed.map(\.url))
         let freed = removed.reduce(0) { $0 + $1.size }
         Stats.record(freed: freed)
-        ActivityJournal.shared.recordRemoval(
+        lastEntryID = ActivityJournal.shared.recordRemoval(
             .spaceExplorer, removal: removal, candidates: targets.map { RemovalCandidate(url: $0.url, size: $0.size) }
-        )
+        )?.id
         entries.removeAll { removedURLs.contains($0.url) }
         selection.subtract(removedURLs)
         // Les tailles des dossiers parents ne sont plus à jour.
@@ -175,6 +183,7 @@ struct SpaceExplorerView: View {
                     Image(systemName: "checkmark.seal.fill").foregroundColor(Theme.mint)
                     Text(message).foregroundColor(Theme.mint).monospacedDigit()
                     Spacer()
+                    UndoActionButton(entryID: model.lastEntryID, title: "Annuler") { model.reload() }
                 }
             }
         }

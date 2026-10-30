@@ -555,3 +555,20 @@
 "… et %lld autres, dans l'export" = "… und %lld weitere im Export";
 "Exporter cette action…" = "Diese Aktion exportieren …";
 "Voir le détail dans l'historique" = "Details im Verlauf ansehen";
+
+/* Restauration */
+"%lld élément(s) remis en place." = "%lld Objekt(e) zurückgelegt.";
+"%lld élément(s) laissés dans la Corbeille : un élément du même nom est déjà à leur place." = "%lld Objekt(e) bleiben im Papierkorb: An ihrem Ort liegt bereits ein Objekt mit demselben Namen.";
+"%lld élément(s) ne sont plus dans la Corbeille." = "%lld Objekt(e) sind nicht mehr im Papierkorb.";
+"%lld élément(s) n'ont pas pu être remis en place : utilisez « Remettre » dans la Corbeille du Finder." = "%lld Objekt(e) konnten nicht zurückgelegt werden: Verwende „Zurücklegen“ im Papierkorb des Finder.";
+"Rien à remettre en place." = "Nichts zum Zurücklegen.";
+"Remis en place" = "Zurückgelegt";
+"Corbeille vidée" = "Papierkorb geleert";
+"Annuler la dernière suppression" = "Letztes Entfernen widerrufen";
+"%@ · %@" = "%@ · %@";
+"Tout remettre en place" = "Alles zurücklegen";
+"Un élément du même nom est déjà à cet emplacement : remettez celui-ci depuis la Corbeille si besoin." = "An diesem Ort liegt bereits ein Objekt mit demselben Namen: Lege dieses bei Bedarf aus dem Papierkorb zurück.";
+"Remettre en place" = "Zurücklegen";
+"Annuler la désinstallation" = "Deinstallation widerrufen";
+"Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler." = "Diese Objekte liegen im Papierkorb: Der Speicher wird erst frei, wenn du ihn leerst. Bis dahin kannst du alles widerrufen.";
+"Annuler ce nettoyage" = "Diese Bereinigung widerrufen";

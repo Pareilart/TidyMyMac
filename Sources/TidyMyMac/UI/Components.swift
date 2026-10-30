@@ -78,9 +78,17 @@ struct ProgressPrompt: View {
 struct DonePrompt: View {
     let freed: Int64
     let failures: [URL]
+    /// Action enregistrée dans le journal, pour l'annuler.
+    var entryID: UUID?
     let again: () -> Void
     @AppStorage(Stats.totalFreedKey) private var totalFreed = 0
     @EnvironmentObject private var navigation: AppNavigation
+    @ObservedObject private var journal = ActivityJournal.shared
+
+    /// Des éléments sont dans la Corbeille : l'espace n'est libéré qu'une fois celle-ci vidée.
+    private var wentToTrash: Bool {
+        entryID.flatMap(journal.entry(withID:))?.items.contains { $0.outcome == .trashed } == true
+    }
 
     var body: some View {
         VStack(spacing: 14) {
@@ -105,8 +113,16 @@ struct DonePrompt: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             }
+            if wentToTrash {
+                Text("Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler.")
+                    .font(.callout)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 560)
+            }
             HStack(spacing: 12) {
                 Button("Analyser à nouveau", action: again)
+                UndoActionButton(entryID: entryID, title: "Annuler ce nettoyage")
                 Button("Voir le détail dans l'historique") { navigation.selection = .history }
             }
             Spacer()

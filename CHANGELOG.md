@@ -6,6 +6,20 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+### Ajouté
+
+- Restauration : depuis l'Historique, remettre en place un élément ou toute une action tant que la Corbeille n'est pas
+  vidée, jamais par-dessus un fichier qui a pris sa place entre-temps. Bandeau « Annuler la dernière suppression ».
+- « Annuler ce nettoyage » à la fin de Fichiers inutiles, Gros fichiers et Doublons, et « Annuler » dans l'Explorateur
+  d'espace et le Désinstallateur.
+- État de chaque élément dans l'Historique : dans la Corbeille, remis en place (y compris avec « Remettre » dans le
+  Finder) ou Corbeille vidée.
+
+### Modifié
+
+- Après un nettoyage vers la Corbeille, l'app précise que l'espace n'est vraiment libéré qu'une fois la Corbeille
+  vidée. Le total libéré diminue quand des éléments sont remis en place.
+
 ## [0.3.0] - 2026-10-30
 
 ### Ajouté

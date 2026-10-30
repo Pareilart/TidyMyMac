@@ -211,6 +211,13 @@ enum Stats {
         let total = UserDefaults.standard.integer(forKey: totalFreedKey)
         UserDefaults.standard.set(total + Int(bytes), forKey: totalFreedKey)
     }
+
+    /// Après une restauration, l'espace n'est plus libéré.
+    static func subtract(freed bytes: Int64) {
+        guard bytes > 0 else { return }
+        let total = UserDefaults.standard.integer(forKey: totalFreedKey)
+        UserDefaults.standard.set(max(total - Int(bytes), 0), forKey: totalFreedKey)
+    }
 }
 
 enum Permissions {

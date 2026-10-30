@@ -32,10 +32,12 @@ extension JournalKind {
     }
 }
 
-extension JournalItem.Outcome {
+extension JournalItem.Availability {
     var title: String {
         switch self {
-        case .trashed: return localized("Dans la Corbeille")
+        case .restorable, .occupied, .inTrash: return localized("Dans la Corbeille")
+        case .restored: return localized("Remis en place")
+        case .trashEmptied: return localized("Corbeille vidée")
         case .deleted: return localized("Supprimé définitivement")
         case .failed: return localized("Non supprimé")
         }
@@ -43,7 +45,9 @@ extension JournalItem.Outcome {
 
     var icon: String {
         switch self {
-        case .trashed: return "trash"
+        case .restorable, .occupied, .inTrash: return "trash"
+        case .restored: return "arrow.uturn.backward"
+        case .trashEmptied: return "trash.slash"
         case .deleted: return "xmark.bin"
         case .failed: return "exclamationmark.triangle"
         }
@@ -51,9 +55,37 @@ extension JournalItem.Outcome {
 
     var tint: Color {
         switch self {
-        case .trashed: return Theme.sky
+        case .restorable, .occupied, .inTrash: return Theme.sky
+        case .restored: return Theme.mint
+        case .trashEmptied: return Color.gray
         case .deleted: return Theme.coral
         case .failed: return Theme.amber
+        }
+    }
+}
+
+/// Remet en place, depuis la Corbeille, ce qu'une action vient d'y mettre.
+struct UndoActionButton: View {
+    let entryID: UUID?
+    let title: LocalizedStringKey
+    var onRestore: () -> Void = {}
+    @ObservedObject private var journal = ActivityJournal.shared
+    /// Bilan de la dernière restauration, pour l'action concernée seulement.
+    @StateObject private var outcome = ViewState<(id: UUID, message: String)?>(nil)
+
+    var body: some View {
+        if let outcome = outcome.value, outcome.id == entryID {
+            Label(outcome.message, systemImage: "arrow.uturn.backward.circle")
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+        } else if let id = entryID, let entry = journal.entry(withID: id), !entry.restorableItems.isEmpty {
+            Button {
+                outcome.value = (id, journal.restore(id).message)
+                onRestore()
+            } label: {
+                Label(title, systemImage: "arrow.uturn.backward")
+            }
         }
     }
 }
@@ -74,6 +106,8 @@ struct HistoryView: View {
         ScreenshotStudio.isActive ? Set(ActivityJournal.shared.entries.prefix(1).map(\.id)) : []
     )
     @StateObject private var confirmClear = ViewState(false)
+    /// Garde le bandeau d'annulation affiché avec son bilan après la restauration.
+    @StateObject private var undoBannerEntry = ViewState<UUID?>(nil)
 
     var body: some View {
         VStack(spacing: 0) {
@@ -84,6 +118,7 @@ struct HistoryView: View {
             } else {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
+                        undoBanner
                         summary
                         chart
                         entries
@@ -97,6 +132,35 @@ struct HistoryView: View {
             Button("Effacer l'historique", role: .destructive) { journal.clear() }
         } message: {
             Text("Seul l'historique est effacé : les fichiers dans la Corbeille et le total libéré ne changent pas.")
+        }
+    }
+
+    // MARK: Annulation
+
+    /// Dernière action qui a supprimé des éléments.
+    private var lastRemoval: JournalEntry? {
+        journal.entries.first { !$0.items.isEmpty }
+    }
+
+    @ViewBuilder private var undoBanner: some View {
+        if let entry = lastRemoval, !entry.restorableItems.isEmpty || undoBannerEntry.value == entry.id {
+            HStack(spacing: 12) {
+                IconTile(symbol: "arrow.uturn.backward", tint: Theme.sky, size: 36)
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Annuler la dernière suppression").font(.system(.headline, design: .rounded))
+                    Text(localized("\(entry.title) · \(entry.date.relativeDescription)"))
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+                UndoActionButton(entryID: entry.id, title: "Tout remettre en place") {
+                    undoBannerEntry.value = entry.id
+                }
+                .buttonStyle(PrimaryButtonStyle(tint: Theme.sky, compact: true))
+            }
+            .padding(14)
+            .background(RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Theme.sky.opacity(0.10)))
+            .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(Theme.sky.opacity(0.35)))
         }
     }
 
@@ -260,6 +324,8 @@ private struct EntryCard: View {
     let entry: JournalEntry
     @Binding var expanded: Bool
     let export: () -> Void
+    @ObservedObject private var journal = ActivityJournal.shared
+    @StateObject private var restoreMessage = ViewState<String?>(nil)
 
     /// Au-delà, la liste complète est dans l'export.
     private static let visibleItems = 60
@@ -328,7 +394,9 @@ private struct EntryCard: View {
                 .padding(.vertical, 5)
             }
             ForEach(entry.items.prefix(Self.visibleItems)) { item in
-                ItemRow(item: item)
+                ItemRow(item: item) {
+                    restoreMessage.value = journal.restore(entry.id, paths: [item.path]).message
+                }
                 Divider().opacity(0.3)
             }
             HStack {
@@ -338,11 +406,23 @@ private struct EntryCard: View {
                         .foregroundColor(.secondary)
                 }
                 Spacer()
+                if !entry.restorableItems.isEmpty {
+                    Button {
+                        restoreMessage.value = journal.restore(entry.id).message
+                    } label: {
+                        Label("Tout remettre en place", systemImage: "arrow.uturn.backward")
+                    }
+                    .buttonStyle(.borderless)
+                    .font(.caption)
+                }
                 Button("Exporter cette action…", action: export)
                     .buttonStyle(.borderless)
                     .font(.caption)
             }
             .padding(.top, 8)
+            if let message = restoreMessage.value {
+                Text(message).font(.caption).foregroundColor(.secondary).padding(.top, 4)
+            }
         }
         .padding(.leading, 46)
     }
@@ -350,6 +430,7 @@ private struct EntryCard: View {
 
 private struct ItemRow: View {
     let item: JournalItem
+    let restore: () -> Void
 
     /// Où retrouver l'élément aujourd'hui : dans la Corbeille, ou à sa place s'il n'a pas été supprimé.
     private var currentLocation: URL? {
@@ -358,6 +439,7 @@ private struct ItemRow: View {
     }
 
     var body: some View {
+        let availability = item.availability
         HStack(spacing: 10) {
             Image(nsImage: FS.icon(for: item.url)).resizable().frame(width: 18, height: 18)
             VStack(alignment: .leading, spacing: 1) {
@@ -373,13 +455,21 @@ private struct ItemRow: View {
             if item.size > 0 {
                 Text(item.size.formattedBytes).font(.caption).foregroundColor(.secondary).monospacedDigit()
             }
-            Label(item.outcome.title, systemImage: item.outcome.icon)
+            Label(availability.title, systemImage: availability.icon)
                 .font(.caption2.weight(.semibold))
-                .foregroundColor(item.outcome.tint)
+                .foregroundColor(availability.tint)
                 .padding(.horizontal, 7)
                 .padding(.vertical, 3)
-                .background(Capsule().fill(item.outcome.tint.opacity(0.14)))
+                .background(Capsule().fill(availability.tint.opacity(0.14)))
                 .fixedSize()
+                .help(availability == .occupied
+                    ? localized("Un élément du même nom est déjà à cet emplacement : remettez celui-ci depuis la Corbeille si besoin.")
+                    : "")
+            if availability == .restorable {
+                Button(action: restore) { Image(systemName: "arrow.uturn.backward") }
+                    .buttonStyle(.borderless)
+                    .help("Remettre en place")
+            }
             Button { if let location = currentLocation { FS.reveal(location) } } label: {
                 Image(systemName: "magnifyingglass")
             }

@@ -80,6 +80,8 @@ final class DuplicatesModel: ObservableObject {
     @Published var phase: ScanPhase = .idle
     @Published var root = FS.home
     @Published var failures: [URL] = []
+    /// Dernière action enregistrée dans le journal, pour pouvoir l'annuler.
+    @Published var lastEntryID: UUID?
 
     var wasted: Int64 { groups.reduce(0) { $0 + $1.wasted } }
     var selectedSize: Int64 { groups.reduce(0) { $0 + $1.files.selectedSize } }
@@ -106,9 +108,9 @@ final class DuplicatesModel: ObservableObject {
         failures = removal.failed
         groups = []
         Stats.record(freed: freed)
-        ActivityJournal.shared.recordRemoval(
+        lastEntryID = ActivityJournal.shared.recordRemoval(
             .duplicates, removal: removal, candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
-        )
+        )?.id
         phase = .done(freed: freed)
     }
 }
@@ -154,7 +156,7 @@ struct DuplicatesView: View {
         case .cleaning:
             ProgressPrompt(text: "Déplacement vers la Corbeille…")
         case .done(let freed):
-            DonePrompt(freed: freed, failures: model.failures) { Task { await model.scan() } }
+            DonePrompt(freed: freed, failures: model.failures, entryID: model.lastEntryID) { Task { await model.scan() } }
         case .ready:
             if model.groups.isEmpty {
                 StartPrompt(text: "Aucun doublon trouvé.", buttonTitle: "Analyser à nouveau") {

@@ -24,7 +24,7 @@ struct JunkView: View {
         case .cleaning:
             ProgressPrompt(text: "Nettoyage en cours…")
         case .done(let freed):
-            DonePrompt(freed: freed, failures: model.failures) {
+            DonePrompt(freed: freed, failures: model.failures, entryID: model.lastEntryID) {
                 Task { await model.scan() }
             }
         case .ready:

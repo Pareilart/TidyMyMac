@@ -13,6 +13,8 @@ final class JunkModel: ObservableObject {
     @Published var phase: ScanPhase = .idle
     @Published var progressLabel = ""
     @Published var failures: [URL] = []
+    /// Dernière action enregistrée dans le journal, pour pouvoir l'annuler.
+    @Published var lastEntryID: UUID?
 
     var totalSize: Int64 { results.reduce(0) { $0 + $1.items.totalSize } }
     var selectedSize: Int64 { results.reduce(0) { $0 + $1.items.selectedSize } }
@@ -58,7 +60,7 @@ final class JunkModel: ObservableObject {
         failures = removal.failed
         results = []
         Stats.record(freed: freed)
-        ActivityJournal.shared.recordRemoval(.junk, removal: removal, candidates: candidates)
+        lastEntryID = ActivityJournal.shared.recordRemoval(.junk, removal: removal, candidates: candidates)?.id
         phase = .done(freed: freed)
     }
 }
