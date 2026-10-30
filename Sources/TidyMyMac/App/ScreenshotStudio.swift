@@ -49,6 +49,7 @@ enum ScreenshotStudio {
             ("05-ai-search", .search),
             ("09-rules", .rules),
             ("10-history", .history),
+            ("13-how-it-works", .howItWorks),
         ]
         for scene in scenes {
             let demo = DemoModels()

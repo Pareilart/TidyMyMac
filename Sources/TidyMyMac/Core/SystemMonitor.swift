@@ -205,7 +205,7 @@ final class SystemMonitor: ObservableObject {
     }
 
     /// 1 = normale, 2 = avertissement, 4 = critique.
-    private static func readMemoryPressure() -> Int32 {
+    nonisolated static func readMemoryPressure() -> Int32 {
         var level: Int32 = 1
         var size = MemoryLayout<Int32>.size
         sysctlbyname("kern.memorystatus_vm_pressure_level", &level, &size, nil, 0)

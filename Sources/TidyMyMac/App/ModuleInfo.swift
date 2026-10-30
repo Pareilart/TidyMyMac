@@ -107,9 +107,19 @@ extension Module {
                     ModuleFeature(icon: "square.and.arrow.up", text: localized("Export en CSV ou JSON")),
                 ]
             )
+        case .howItWorks:
+            return ModuleInfo(
+                tagline: localized("Ce que TidyMyMac fait, ce qu'il ne fait pas, et quand un nettoyage ne sert à rien."),
+                accent: Theme.amber, heroSymbol: "lightbulb", actionTitle: localized("Ouvrir"),
+                features: [
+                    ModuleFeature(icon: "checkmark.circle", text: localized("Ce que fait l'app, sans promesse magique")),
+                    ModuleFeature(icon: "info.circle", text: localized("Quand nettoyer ne sert à rien")),
+                    ModuleFeature(icon: "magnifyingglass.circle", text: localized("Comment le vérifier vous-même")),
+                ]
+            )
         case .performance:
             return ModuleInfo(
-                tagline: localized("Des recommandations et des outils pour un Mac plus réactif."),
+                tagline: localized("Apps au démarrage, éléments d'arrière-plan et outils d'entretien, sans promesse magique."),
                 accent: Theme.lime, heroSymbol: "speedometer", actionTitle: localized("Analyser"),
                 features: [
                     ModuleFeature(icon: "wrench.and.screwdriver", text: localized("Tâches d'entretien en un clic")),

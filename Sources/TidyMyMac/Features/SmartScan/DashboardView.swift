@@ -89,7 +89,9 @@ struct DashboardView: View {
                 SummaryRow(
                     icon: "wrench.and.screwdriver", tint: Theme.lime,
                     title: "Maintenance",
-                    value: "Vider le cache DNS et libérer la mémoire vive",
+                    value: LocalizedStringKey(MaintenanceModel.memoryUnderPressure
+                        ? localized("Mémoire sous tension : la libérer peut aider")
+                        : localized("Rien à faire : macOS gère la mémoire et le cache DNS")),
                     buttonTitle: "Ouvrir"
                 ) { openPerformance(.overview) }
             }

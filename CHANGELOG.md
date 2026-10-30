@@ -6,6 +6,18 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+### Ajouté
+
+- Page « Comment ça marche » : ce que TidyMyMac fait, ce qu'il ne fait pas, quand un nettoyage ne sert à rien et comment
+  le vérifier soi-même (code public, règles lisibles, exports, `--list-rules`).
+
+### Modifié
+
+- Entretien : plus de routine hebdomadaire conseillée. Une tâche n'est suggérée que si une mesure la justifie (mémoire
+  sous tension signalée par macOS) ; sinon l'app indique qu'il n'y a rien à faire. Aucune tâche n'est cochée d'office.
+- Textes de Performances et de l'Analyse intelligente sans promesse de vitesse : « Ce qui pèse vraiment sur votre Mac ».
+- Barre latérale encore un peu plus compacte.
+
 ## [0.5.0] - 2026-10-30
 
 ### Ajouté

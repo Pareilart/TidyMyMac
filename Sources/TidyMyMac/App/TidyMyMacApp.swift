@@ -92,7 +92,7 @@ final class AppNavigation: ObservableObject {
 }
 
 enum Module: String, CaseIterable, Identifiable {
-    case smartScan, search, junk, rules, largeFiles, duplicates, spaceExplorer, uninstaller, performance, history
+    case smartScan, search, junk, rules, largeFiles, duplicates, spaceExplorer, uninstaller, performance, history, howItWorks
 
     var id: String { rawValue }
 
@@ -108,6 +108,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .uninstaller: return localized("Désinstallateur")
         case .performance: return localized("Performances")
         case .history: return localized("Historique")
+        case .howItWorks: return localized("Comment ça marche")
         }
     }
 
@@ -123,6 +124,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .uninstaller: return "xmark.app"
         case .performance: return "speedometer"
         case .history: return "clock.arrow.circlepath"
+        case .howItWorks: return "lightbulb"
         }
     }
 }
@@ -163,6 +165,7 @@ struct ContentView: View {
         case .uninstaller: UninstallerView()
         case .performance: PerformanceView()
         case .history: HistoryView()
+        case .howItWorks: HowItWorksView()
         }
     }
 }

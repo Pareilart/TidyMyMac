@@ -25,7 +25,8 @@
 ## Why TidyMyMac
 
 - **Free and open source**: MIT license, no subscription, no account, no upsell.
-- **Transparent**: you see every file before it goes, and personal files always go to the Trash first.
+- **Transparent**: you see every file before it goes, personal files always go to the Trash first, and the app tells
+  you when cleaning up won’t help.
 - **Private**: no telemetry. AI Search runs on your Mac with an open-source model; your files never leave it.
 - **Native**: a Swift and SwiftUI app with no third-party dependencies.
 
@@ -41,7 +42,8 @@
 | **Duplicates** | Identical files grouped by content (SHA-256), always keeping one copy. |
 | **Space Explorer** | See what fills your disk as bubbles or as a list, then select several items to reveal or remove. |
 | **Uninstaller** | Remove an app with its leftovers in `~/Library`, or reset an app by deleting only its data. |
-| **Performance** | Recommendations first, then detailed managers: maintenance tasks (RAM, DNS, Time Machine snapshots, Spotlight, Mail, Launch Services) with measured gains, login apps and background items. |
+| **Performance** | Login apps and background items first, then maintenance tools (RAM, DNS, Time Machine snapshots, Spotlight, Mail, Launch Services) with measured gains. A task is only suggested when a measurement justifies it, such as memory pressure reported by macOS. |
+| **How It Works** | What TidyMyMac does, what it doesn’t, when cleaning up is pointless, and how to check it yourself. |
 | **History** | Every cleanup, uninstall and maintenance run, item by item: where each file went (Trash or deleted), what was freed over time, with CSV and JSON export. Put any item back from the Trash, or undo a whole cleanup. |
 | **Menu bar** | Live Mac health — disk, memory, CPU, battery, network with speed test, connected volumes — plus a search bar for AI Search. |
 
@@ -129,6 +131,16 @@ that has taken its place since.
   &nbsp;&nbsp;
   <img src="docs/screenshots/07-settings.png" width="420" alt="Settings window">
 </p>
+
+### How It Works
+
+<p align="center">
+  <img src="docs/screenshots/13-how-it-works.png" alt="How It Works">
+</p>
+
+A plain page inside the app: removing caches frees space, not speed; macOS already manages memory, swap and most of
+“System Data”; and with plenty of free space, cleaning up makes no visible difference. TidyMyMac only suggests a
+maintenance task when a measurement justifies it.
 
 ## Privacy
 

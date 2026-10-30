@@ -13,7 +13,7 @@ struct ModuleSection: Identifiable {
         ModuleSection(title: localized("Encombrement"), modules: [.largeFiles, .duplicates, .spaceExplorer]),
         ModuleSection(title: localized("Applications"), modules: [.uninstaller]),
         ModuleSection(title: localized("Performances"), modules: [.performance]),
-        ModuleSection(title: localized("Suivi"), modules: [.history]),
+        ModuleSection(title: localized("Suivi"), modules: [.history, .howItWorks]),
     ] }
 }
 
@@ -33,7 +33,7 @@ struct Sidebar: View {
                             .font(.system(size: 10, weight: .bold, design: .rounded))
                             .foregroundColor(.secondary)
                             .padding(.horizontal, 12)
-                            .padding(.top, 10)
+                            .padding(.top, 8)
                             .padding(.bottom, 2)
                         ForEach(section.modules) { module in
                             SidebarItem(module: module, selected: (navigation.selection ?? .smartScan) == module) {
@@ -79,7 +79,7 @@ struct Sidebar: View {
             }
         }
         .padding(.horizontal, 12)
-        .padding(.top, 40)
+        .padding(.top, 34)
         .padding(.bottom, 8)
     }
 

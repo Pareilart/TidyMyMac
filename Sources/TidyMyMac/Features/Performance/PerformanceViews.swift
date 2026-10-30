@@ -54,9 +54,9 @@ private struct PerformanceOverview: View {
             ScrollView {
                 VStack(spacing: 26) {
                     VStack(spacing: 10) {
-                        Text("Un Mac plus vif, en quelques clics")
+                        Text("Ce qui pèse vraiment sur votre Mac")
                             .font(.system(size: 30, weight: .semibold, design: .rounded))
-                        Text("Lancez ce que nous conseillons, ou choisissez vous-même parmi toutes les tâches.")
+                        Text("Commencez par les apps au démarrage et les éléments d'arrière-plan. L'entretien sert quand un problème se présente.")
                             .font(.title3)
                             .foregroundColor(.secondary)
                         Button("Toutes les tâches") { navigation.performanceRoute = .maintenance }
@@ -83,10 +83,11 @@ private struct PerformanceOverview: View {
     }
 
     private var maintenanceCard: some View {
-        let tasks = maintenance.selectedTasks
+        let recommended = maintenance.recommendedTasks
+        let tasks = recommended.isEmpty ? MaintenanceTask.all : recommended
         return PerformanceCard(tint: Theme.lime) {
             VStack(alignment: .leading, spacing: 10) {
-                Text(maintenance.isDue ? localized("\(tasks.count) tâche(s) d'entretien conseillée(s)") : localized("Entretien à jour"))
+                Text(recommended.isEmpty ? localized("Rien à faire pour l'instant") : localized("\(recommended.count) tâche(s) utile(s) en ce moment"))
                     .font(cardTitle)
                 Text(maintenanceMessage).foregroundColor(.secondary).fixedSize(horizontal: false, vertical: true)
                 Spacer(minLength: 20)
@@ -107,22 +108,25 @@ private struct PerformanceOverview: View {
                     Spacer()
                     Button("Examiner") { navigation.performanceRoute = .maintenance }
                         .buttonStyle(SecondaryButtonStyle())
-                    Button(maintenance.running ? localized("En cours…") : localized("Lancer les tâches")) {
-                        Task { await maintenance.run() }
+                    if !recommended.isEmpty {
+                        Button(maintenance.running ? localized("En cours…") : localized("Lancer les tâches")) {
+                            Task { await maintenance.run(recommended) }
+                        }
+                        .buttonStyle(PrimaryButtonStyle(tint: Theme.lime))
+                        .disabled(maintenance.running)
                     }
-                    .buttonStyle(PrimaryButtonStyle(tint: Theme.lime))
-                    .disabled(maintenance.running || tasks.isEmpty)
                 }
             }
         }
         .frame(minHeight: 400)
     }
 
+    /// Pas de routine hebdomadaire : on ne conseille une tâche que si une mesure la justifie.
     private var maintenanceMessage: String {
-        if !maintenance.isDue, let lastRun = maintenance.lastRun {
-            return localized("Dernier passage \(lastRun.relativeDescription). Vous pouvez relancer les tâches quand vous voulez.")
+        if !maintenance.recommendedTasks.isEmpty {
+            return localized("macOS signale une mémoire sous tension : la libérer peut aider le temps de finir ce que vous faites.")
         }
-        return localized("Mémoire, cache DNS… Un passage par semaine suffit à garder un système réactif.")
+        return localized("macOS gère seul la mémoire et le cache DNS. Ces outils servent quand un problème se présente : un site qui ne charge plus, Spotlight qui ne trouve rien, des doublons dans « Ouvrir avec ».")
     }
 
     private func gainSummary(_ gains: MaintenanceGains) -> String {

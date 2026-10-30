@@ -17,7 +17,7 @@ struct MaintenanceTask: Identifiable, Sendable {
     static var all: [MaintenanceTask] { [
         MaintenanceTask(
             id: "free-ram", title: localized("Libérer la mémoire vive"),
-            detail: localized("Vide le cache disque gardé en mémoire (commande purge)."),
+            detail: localized("Vide le cache disque gardé en mémoire (commande purge). macOS le fait seul quand il le faut : utile seulement si la mémoire est sous tension."),
             icon: "memorychip", needsAdmin: true, gauge: .freeMemory,
             doneMessage: localized("Mémoire déjà optimisée"),
             command: "/usr/sbin/purge"
@@ -143,9 +143,9 @@ enum MaintenanceRunner {
 @MainActor
 final class MaintenanceModel: ObservableObject {
     private static let lastRunKey = "lastMaintenanceRun"
-    private static let interval: TimeInterval = 7 * 24 * 3600
 
-    @Published var selected: Set<String> = ["free-ram", "flush-dns"]
+    /// Rien n'est coché d'office : ces tâches répondent à un problème, ce ne sont pas une routine.
+    @Published var selected: Set<String> = []
     @Published var runningTasks: Set<String> = []
     @Published var outcomes: [String: MaintenanceOutcome] = [:]
     @Published var lastGains: MaintenanceGains?
@@ -153,16 +153,21 @@ final class MaintenanceModel: ObservableObject {
 
     var running: Bool { !runningTasks.isEmpty }
 
-    /// Un entretien est conseillé s'il n'a jamais été fait ou date de plus d'une semaine.
-    var isDue: Bool {
-        guard let lastRun else { return true }
-        return Date().timeIntervalSince(lastRun) > Self.interval
+    /// macOS signale une mémoire sous tension (niveau « avertissement » ou « critique »).
+    static var memoryUnderPressure: Bool { SystemMonitor.readMemoryPressure() >= 2 }
+
+    /// Tâches justifiées par une mesure, maintenant. Vide la plupart du temps : macOS gère seul la mémoire et les caches.
+    var recommendedTasks: [MaintenanceTask] {
+        Self.memoryUnderPressure ? MaintenanceTask.all.filter { $0.id == "free-ram" } : []
     }
 
     var selectedTasks: [MaintenanceTask] { MaintenanceTask.all.filter { selected.contains($0.id) } }
 
     func run() async {
-        let tasks = selectedTasks
+        await run(selectedTasks)
+    }
+
+    func run(_ tasks: [MaintenanceTask]) async {
         runningTasks = Set(tasks.map(\.id))
         for task in tasks { outcomes[task.id] = nil }
         let result = await Task.detached(priority: .userInitiated) { MaintenanceRunner.execute(tasks) }.value
