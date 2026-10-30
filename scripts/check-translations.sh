@@ -25,4 +25,5 @@ for DIR in Resources/Localization/*.lproj; do
         echo "$LANG_CODE : complet ($(wc -l < "$KEYS" | tr -d ' ') textes)"
     fi
 done
+perl scripts/check-rules.pl || STATUS=1
 exit $STATUS

@@ -8,6 +8,18 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ### Ajouté
 
+- Règles de nettoyage déclaratives en JSON (`Resources/Rules`) : chaque catégorie de fichiers inutiles affiche son
+  niveau de risque (sans danger, à vérifier, irréversible) et explique, via le bouton ⓘ, ce qu'elle supprime, ce qui se
+  passe ensuite et où elle cherche.
+- Écran « Règles et profils » : profils Développeur, Photographe et Vidéaste (node_modules, Gradle, Cargo, Maven,
+  aperçus Lightroom, rendus Final Cut Pro, caches Adobe et DaVinci Resolve), avec détection des outils présents sur le
+  Mac ; chaque règle peut être désactivée.
+- Création de règles personnelles dans un formulaire (dossiers, recherche par nom, extensions, ancienneté, niveau de
+  risque), avec un bouton « Tester la règle » qui montre ce qu'elle trouverait sans rien supprimer. Garde-fous : jamais de
+  dossier système ni de dossier personnel entier, jamais de suppression définitive imposée.
+- Numéro de version affiché sous le nom de l'app, en haut de la barre latérale.
+- `TidyMyMac --list-rules` affiche ce que chaque règle active trouverait, sans rien supprimer ; `scripts/check-translations.sh`
+  vérifie aussi les règles intégrées.
 - Recherche IA : retrouver un document en le décrivant en langage naturel, avec un modèle Hugging Face
   (intfloat/multilingual-e5-small) exécuté sur le Mac et l'OCR des scans et images. Indexation et recherche
   100 % locales : aucune donnée n'est envoyée à un serveur.
@@ -25,11 +37,14 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ### Corrigé
 
+- Captures d'écran : le sélecteur de langue montrait la langue enregistrée sur le Mac au lieu de celle des captures.
 - L'alerte « Accès complet au disque » restait affichée alors que l'accès était accordé : la vérification lisait un
   fichier absent des versions récentes de macOS. Un bouton « Relancer » applique aussi l'accès sans quitter l'app à la main.
 
 ### Modifié
 
+- Les pièces jointes de Mail ne sont plus cochées par défaut : une pièce jointe modifiée depuis Mail n'existe parfois
+  que là.
 - Performances : un parcours en deux temps, avec des cartes de recommandations puis des gestionnaires détaillés
   (entretien, apps au démarrage, éléments d'arrière-plan) avec recherche, tri et sélection groupée.
 

@@ -1,7 +1,15 @@
 import SwiftUI
 
-/// Lance la génération des captures du README quand l'app est ouverte avec `--screenshots <dossier>`.
+/// Options de lancement : `--list-rules` (rapport des règles de nettoyage, sans rien supprimer) et
+/// `--screenshots <dossier>` (captures du README).
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        if CommandLine.arguments.contains("--list-rules") {
+            RuleBook.printReport()
+            exit(0)
+        }
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         if ScreenshotStudio.isActive {
             ScreenshotStudio.run()
@@ -13,6 +21,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 struct TidyMyMacApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @StateObject private var junk = JunkModel()
+    @StateObject private var rules = RulesModel()
     @StateObject private var apps = AppsModel()
     @StateObject private var largeFiles = LargeFilesModel()
     @StateObject private var duplicates = DuplicatesModel()
@@ -32,6 +41,7 @@ struct TidyMyMacApp: App {
             ContentView()
                 .environmentObject(navigation)
                 .environmentObject(junk)
+                .environmentObject(rules)
                 .environmentObject(apps)
                 .environmentObject(largeFiles)
                 .environmentObject(duplicates)
@@ -82,7 +92,7 @@ final class AppNavigation: ObservableObject {
 }
 
 enum Module: String, CaseIterable, Identifiable {
-    case smartScan, search, junk, largeFiles, duplicates, spaceExplorer, uninstaller, performance
+    case smartScan, search, junk, rules, largeFiles, duplicates, spaceExplorer, uninstaller, performance
 
     var id: String { rawValue }
 
@@ -91,6 +101,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .smartScan: return localized("Analyse intelligente")
         case .search: return localized("Recherche IA")
         case .junk: return localized("Fichiers inutiles")
+        case .rules: return localized("Règles et profils")
         case .largeFiles: return localized("Gros fichiers")
         case .duplicates: return localized("Doublons")
         case .spaceExplorer: return localized("Explorateur d'espace")
@@ -104,6 +115,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .smartScan: return "sparkles"
         case .search: return "text.magnifyingglass"
         case .junk: return "trash"
+        case .rules: return "slider.horizontal.3"
         case .largeFiles: return "doc.text.magnifyingglass"
         case .duplicates: return "doc.on.doc"
         case .spaceExplorer: return "chart.bar.doc.horizontal"
@@ -142,6 +154,7 @@ struct ContentView: View {
         case .smartScan: DashboardView(selection: $navigation.selection)
         case .search: SmartSearchView()
         case .junk: JunkView()
+        case .rules: RulesView()
         case .largeFiles: LargeFilesView()
         case .duplicates: DuplicatesView()
         case .spaceExplorer: SpaceExplorerView()

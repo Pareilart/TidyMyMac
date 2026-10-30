@@ -1,9 +1,9 @@
 import Foundation
 
 struct JunkResult: Identifiable, Sendable {
-    let category: JunkCategory
+    let rule: CleanupRule
     var items: [ScanItem]
-    var id: String { category.id }
+    var id: String { rule.id }
     var allSelected: Bool { !items.isEmpty && items.allSatisfy(\.selected) }
 }
 
@@ -21,14 +21,15 @@ final class JunkModel: ObservableObject {
         phase = .scanning
         results = []
         failures = []
-        for category in JunkCategory.all {
-            progressLabel = category.title
+        let rules = await Task.detached(priority: .userInitiated) { RuleBook.load().activeRules }.value
+        for rule in rules {
+            progressLabel = rule.title
             let result = await Task.detached(priority: .userInitiated) {
-                let items = category.locate()
-                    .map { ScanItem(url: $0, size: FS.size(of: $0), selected: category.selectedByDefault) }
+                let items = rule.locate()
+                    .map { ScanItem(url: $0, size: FS.size(of: $0), selected: rule.selectedByDefault) }
                     .filter { $0.size > 0 }
                     .sorted { $0.size > $1.size }
-                return JunkResult(category: category, items: items)
+                return JunkResult(rule: rule, items: items)
             }.value
             if !result.items.isEmpty {
                 results.append(result)
@@ -44,7 +45,7 @@ final class JunkModel: ObservableObject {
         for result in results {
             let urls = result.items.filter(\.selected).map(\.url)
             guard !urls.isEmpty else { continue }
-            let permanently = result.category.alwaysPermanent || Remover.deletePermanently
+            let permanently = result.rule.deletesPermanently
             failed += await Task.detached { Remover.remove(urls, permanently: permanently) }.value
         }
         let failedSet = Set(failed)

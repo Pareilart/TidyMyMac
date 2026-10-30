@@ -9,7 +9,7 @@ struct ModuleSection: Identifiable {
     static var all: [ModuleSection] { [
         ModuleSection(title: localized("Analyse"), modules: [.smartScan]),
         ModuleSection(title: localized("Recherche"), modules: [.search]),
-        ModuleSection(title: localized("Nettoyage"), modules: [.junk]),
+        ModuleSection(title: localized("Nettoyage"), modules: [.junk, .rules]),
         ModuleSection(title: localized("Encombrement"), modules: [.largeFiles, .duplicates, .spaceExplorer]),
         ModuleSection(title: localized("Applications"), modules: [.uninstaller]),
         ModuleSection(title: localized("Performances"), modules: [.performance]),
@@ -67,6 +67,9 @@ struct Sidebar: View {
             BrandMark(size: 32)
             VStack(alignment: .leading, spacing: 0) {
                 Text("TidyMyMac").font(.system(size: 20, weight: .bold, design: .rounded))
+                Text("Version \(AppVersion.current.raw)")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(.secondary)
                 if totalFreed > 0 {
                     Text("\(Int64(totalFreed).formattedBytes) libérés au total")
                         .font(.system(size: 11, weight: .medium, design: .rounded))

@@ -54,6 +54,8 @@ final class AppLocalization: ObservableObject {
 
     /// Langue des formats (tailles, dates relatives, durées), alignée sur celle de l'interface.
     nonisolated(unsafe) private(set) static var locale = Locale.current
+    /// Code de la langue affichée (« fr », « en »…), pour les textes qui portent leurs propres traductions.
+    nonisolated(unsafe) private(set) static var languageCode = Bundle.main.preferredLocalizations.first ?? "fr"
     nonisolated(unsafe) fileprivate static var bundle: Bundle?
     private static var mainBundleRedirected = false
 
@@ -74,6 +76,7 @@ final class AppLocalization: ObservableObject {
         }
         let code = language == .system ? Self.systemLanguageCode(ignoringSaved: persist) : language.rawValue
         Self.bundle = Bundle.main.path(forResource: code, ofType: "lproj").flatMap(Bundle.init(path:))
+        Self.languageCode = code
         SemanticSearchLocalization.bundle = Self.bundle ?? .main
         let region = Locale.current.region?.identifier
         Self.locale = Locale(identifier: region.map { "\(code)_\($0)" } ?? code)

@@ -4,8 +4,8 @@ use strict; use warnings;
 binmode STDOUT, ':encoding(UTF-8)';
 my (%keys, @order);
 my $lit = qr/"((?:[^"\\\n]|\\.)*)"/;
-my $context = qr/(?:\blocalized\(\s*|String\(localized:\s*|\b(?:Text|Button|Label|Toggle|Section|Picker|Menu|TextField|Link)\(\s*|\.(?:help|confirmationDialog)\(\s*|\b(?:text|buttonTitle|summary|actionTitle|label|title|value|help|heading|description):\s*|\?\s*(?=")|\s:\s*(?="))/;
-sub is_int { my $e = shift; return $e =~ /^Int\(/ || $e =~ /(?:count|Count|done|total|succeeded|broken|dimension|statusCode)$/; }
+my $context = qr/(?:\blocalized\(\s*|String\(localized:\s*|\b(?:Text|Button|Label|Toggle|Section|Picker|Menu|TextField|Link|section)\(\s*|\.(?:help|confirmationDialog)\(\s*|\b(?:text|buttonTitle|summary|actionTitle|label|title|subtitle|value|help|heading|description):\s*|\?\s*(?=")|\s:\s*(?="))/;
+sub is_int { my $e = shift; return $e =~ /^Int\(/ || $e =~ /(?:count|Count|done|total|succeeded|broken|dimension|statusCode|days|Days|Depth)$/; }
 sub to_key {
     my $s = shift; my $out = '';
     while (length $s) {

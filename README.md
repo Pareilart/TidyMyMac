@@ -34,7 +34,8 @@
 | | |
 | --- | --- |
 | **Quick Check** | One click to find junk files, broken startup items and how much disk space is left, then clean up in place. |
-| **Junk Files** | App caches, logs, Xcode DerivedData, device support files and archives, simulator caches, npm / Gradle / Cargo caches, Mail attachments, downloaded installers, iOS backups and the Trash. |
+| **Junk Files** | App caches, logs, Xcode DerivedData, device support files and archives, simulator caches, npm / Gradle / Cargo caches, Mail attachments, downloaded installers, iOS backups and the Trash. Each category shows its risk level and what happens once it’s removed. |
+| **Rules & Profiles** | Turn on ready-made profiles (developer, photographer, video editor), switch any rule off, or create your own rules with a simple form and test them before use. |
 | **AI Search** | Find a document by describing it — *“my liability insurance certificate”* — even if its file name says nothing. Reads PDFs, Word files and scans (OCR). |
 | **Large Files** | Files and packages above a size threshold, with their last-opened date. |
 | **Duplicates** | Identical files grouped by content (SHA-256), always keeping one copy. |
@@ -59,6 +60,25 @@ Documents, Downloads and Desktop, reads text inside PDFs and Word files, and rec
 <p align="center">
   <img src="docs/screenshots/02-junk-files.png" alt="Junk Files results">
 </p>
+
+Every category carries a risk level — **Safe** (recreated automatically), **Review** (may hold something worth keeping,
+unchecked by default) or **Irreversible** (deleted for good) — and the ⓘ button explains what the rule removes, what
+happens afterwards and where it looks.
+
+<p align="center">
+  <img src="docs/screenshots/08-rule-details.png" width="440" alt="Rule details">
+</p>
+
+### Rules & Profiles
+
+<p align="center">
+  <img src="docs/screenshots/09-rules.png" alt="Rules and Profiles">
+</p>
+
+Turn on the profiles that match your work to add rules for their tools: `node_modules` folders and package caches
+for developers, Lightroom previews for photographers, render files and media caches for video editors. Create your
+own rules with a form — folders, filters, risk level — and test them before they run. See
+[docs/RULES.md](docs/RULES.md) for the details and the safety limits that apply to every rule.
 
 ### Space Explorer
 
@@ -142,6 +162,8 @@ then uses it so permissions survive rebuilds.
   them permanently.
 - Duplicates always keep at least one copy.
 - Nothing is removed without being listed first, with its size and location.
+- Every junk category states its risk level and what happens after removal. No rule can remove a system folder or a
+  personal folder such as Documents, or sweep your whole home or Library folder.
 - System actions go through the standard macOS administrator prompt.
 
 ## AI Search models
@@ -179,9 +201,12 @@ for a text and `%lld` for a number.
 | `Sources/SemanticSearch` | The local AI Search engine: safetensors reader, tokenizers, BERT encoder, index, model store. |
 | `Sources/SearchCheck` | `swift run search-check [--model owner/model] [folder "query"]` to test models and search without the UI. |
 | `Resources/Localization` | Translations. |
+| `Resources/Rules` | Built-in cleanup rules and profiles in JSON ([format](docs/RULES.md)). |
 | `scripts/release.sh` | Bumps `VERSION`, builds, tags and publishes a GitHub release. |
 | `scripts/make-icon.sh` | Regenerates `Resources/AppIcon.icns` from the icon drawn in SwiftUI (`UI/BrandGlyph.swift`). |
 
+- **Rules**: `build/TidyMyMac.app/Contents/MacOS/TidyMyMac --list-rules` prints what each active cleanup rule would
+  find, without removing anything. `./scripts/check-translations.sh` also validates the built-in rules.
 - **Screenshots**: `build/TidyMyMac.app/Contents/MacOS/TidyMyMac --screenshots docs/screenshots -AppleLanguages "(en)" -AppleLocale en_US`
   renders every screen with sample data (no real files).
 - **Releases and updates**: the version lives in `VERSION` and changes are listed in `CHANGELOG.md`. Set
@@ -191,15 +216,16 @@ for a text and `%lld` for a number.
 ## Roadmap
 
 - Restore history and an undo for every cleanup, with a detailed preview and export before deleting.
-- Profession profiles (developers, photographers, video editors…) with dedicated cleanup rules.
+- More profession profiles (musicians, 3D artists, small IT teams).
 - Visible Time Machine snapshot management and an explanation of “System Data”.
-- Custom rules and per-module scheduling, plus a command-line tool.
+- Scheduled cleanups per module, plus a command-line tool.
 - Health history over time (battery, disk) and a “why is my Mac slow?” diagnosis.
 
 ## Contributing
 
-Issues and pull requests are welcome, especially new translations and cleanup rules for apps you use. Please describe
-what a rule removes, why it is safe, and how the data is regenerated.
+Issues and pull requests are welcome, especially new translations and cleanup rules for apps you use. Built-in rules
+and profiles are JSON files in `Resources/Rules`; [docs/RULES.md](docs/RULES.md) explains the format and what to include in
+your pull request.
 
 ## License
 

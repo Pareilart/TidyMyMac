@@ -1,0 +1,133 @@
+{
+  "profile": {
+    "id": "video",
+    "icon": "film",
+    "tint": "rose",
+    "detect": [
+      "/Applications/Final Cut Pro.app",
+      "/Applications/DaVinci Resolve",
+      "~/Library/Application Support/Adobe/Common/Media Cache Files"
+    ],
+    "title": { "fr": "Vidéaste", "en": "Video editor", "es": "Editor de vídeo", "de": "Videoeditor" },
+    "detail": {
+      "fr": "Fichiers de rendu, médias optimisés et caches de montage.",
+      "en": "Render files, optimized media and editing caches.",
+      "es": "Archivos de render, medios optimizados y cachés de edición.",
+      "de": "Renderdateien, optimierte Medien und Schnitt-Caches."
+    }
+  },
+  "rules": [
+    {
+      "id": "video-fcp-render-files",
+      "icon": "film.stack",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "target": "search",
+      "names": ["Render Files"],
+      "maxDepth": 4,
+      "locations": ["~/Movies"],
+      "title": {
+        "fr": "Final Cut Pro – Fichiers de rendu",
+        "en": "Final Cut Pro – Render files",
+        "es": "Final Cut Pro – Archivos de render",
+        "de": "Final Cut Pro – Renderdateien"
+      },
+      "detail": {
+        "fr": "Rendus d'arrière-plan des bibliothèques Final Cut Pro.",
+        "en": "Background renders of Final Cut Pro libraries.",
+        "es": "Renders en segundo plano de las bibliotecas de Final Cut Pro.",
+        "de": "Hintergrund-Renderings der Final Cut Pro-Mediatheken."
+      },
+      "afterRemoval": {
+        "fr": "Final Cut Pro les recrée en arrière-plan. Fermez-le avant de nettoyer.",
+        "en": "Final Cut Pro recreates them in the background. Quit it before cleaning.",
+        "es": "Final Cut Pro los vuelve a crear en segundo plano. Ciérralo antes de limpiar.",
+        "de": "Final Cut Pro erstellt sie im Hintergrund neu. Beende es vor dem Bereinigen."
+      }
+    },
+    {
+      "id": "video-fcp-transcoded-media",
+      "icon": "film",
+      "risk": "review",
+      "selectedByDefault": false,
+      "target": "search",
+      "names": ["Transcoded Media"],
+      "maxDepth": 4,
+      "locations": ["~/Movies"],
+      "title": {
+        "fr": "Final Cut Pro – Médias optimisés et proxys",
+        "en": "Final Cut Pro – Optimized and proxy media",
+        "es": "Final Cut Pro – Medios optimizados y proxy",
+        "de": "Final Cut Pro – Optimierte und Proxy-Medien"
+      },
+      "detail": {
+        "fr": "Copies transcodées de vos rushs.",
+        "en": "Transcoded copies of your footage.",
+        "es": "Copias transcodificadas de tu material.",
+        "de": "Transkodierte Kopien deines Materials."
+      },
+      "afterRemoval": {
+        "fr": "Final Cut Pro peut les recréer à partir des originaux. Si les originaux sont hors ligne, vous ne pourrez plus monter avec ces copies.",
+        "en": "Final Cut Pro can recreate them from the originals. If the originals are offline, you can no longer edit with these copies.",
+        "es": "Final Cut Pro puede volver a crearlas a partir de los originales. Si los originales no están disponibles, ya no podrás editar con estas copias.",
+        "de": "Final Cut Pro kann sie aus den Originalen neu erstellen. Sind die Originale offline, kannst du mit diesen Kopien nicht mehr schneiden."
+      }
+    },
+    {
+      "id": "video-adobe-media-cache",
+      "icon": "internaldrive",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": [
+        "~/Library/Application Support/Adobe/Common/Media Cache Files",
+        "~/Library/Application Support/Adobe/Common/Media Cache"
+      ],
+      "title": {
+        "fr": "Cache média Adobe (Premiere Pro, After Effects)",
+        "en": "Adobe media cache (Premiere Pro, After Effects)",
+        "es": "Caché de medios de Adobe (Premiere Pro, After Effects)",
+        "de": "Adobe-Mediencache (Premiere Pro, After Effects)"
+      },
+      "detail": {
+        "fr": "Fichiers audio conformés et index des médias importés.",
+        "en": "Conformed audio and indexes of imported media.",
+        "es": "Audio conformado e índices de los medios importados.",
+        "de": "Konformierte Audiodateien und Indizes importierter Medien."
+      },
+      "afterRemoval": {
+        "fr": "Recréés à la prochaine ouverture des projets, qui sera plus lente. Fermez les apps Adobe avant de nettoyer.",
+        "en": "Recreated the next time you open your projects, which takes longer. Quit Adobe apps before cleaning.",
+        "es": "Se vuelven a crear la próxima vez que abras tus proyectos, que tardarán más. Cierra las apps de Adobe antes de limpiar.",
+        "de": "Werden beim nächsten Öffnen deiner Projekte neu erstellt, was länger dauert. Beende Adobe-Apps vor dem Bereinigen."
+      }
+    },
+    {
+      "id": "video-resolve-cache",
+      "icon": "play.rectangle",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "target": "search",
+      "names": ["CacheClip"],
+      "maxDepth": 4,
+      "locations": ["~/Movies"],
+      "title": {
+        "fr": "DaVinci Resolve – Cache de rendu",
+        "en": "DaVinci Resolve – Render cache",
+        "es": "DaVinci Resolve – Caché de render",
+        "de": "DaVinci Resolve – Render-Cache"
+      },
+      "detail": {
+        "fr": "Images mises en cache pour une lecture fluide.",
+        "en": "Cached frames for smooth playback.",
+        "es": "Fotogramas en caché para una reproducción fluida.",
+        "de": "Zwischengespeicherte Bilder für eine flüssige Wiedergabe."
+      },
+      "afterRemoval": {
+        "fr": "Resolve les recrée au besoin. Fermez-le avant de nettoyer.",
+        "en": "Resolve recreates them when needed. Quit it before cleaning.",
+        "es": "Resolve los vuelve a crear cuando hace falta. Ciérralo antes de limpiar.",
+        "de": "Resolve erstellt sie bei Bedarf neu. Beende es vor dem Bereinigen."
+      }
+    }
+  ]
+}

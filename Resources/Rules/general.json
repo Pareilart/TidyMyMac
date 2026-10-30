@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "id": "user-caches",
+      "icon": "archivebox",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": ["~/Library/Caches"],
+      "exclude": [
+        "io.github.tidymymac.TidyMyMac",
+        "CloudKit",
+        "FamilyCircle",
+        "com.apple.HomeKit",
+        "com.apple.homed",
+        "com.apple.akd",
+        "com.apple.containermanagerd",
+        "com.apple.ap.adprivacyd",
+        "com.apple.Safari.SafeBrowsing"
+      ],
+      "title": {
+        "fr": "Caches des applications",
+        "en": "App caches",
+        "es": "Cachés de apps",
+        "de": "App-Caches"
+      },
+      "detail": {
+        "fr": "Fichiers temporaires recréés automatiquement par les applications.",
+        "en": "Temporary files that apps recreate automatically.",
+        "es": "Archivos temporales que las apps vuelven a crear automáticamente.",
+        "de": "Temporäre Dateien, die Apps automatisch neu erstellen."
+      },
+      "afterRemoval": {
+        "fr": "Les apps recréent leurs caches au besoin. Elles peuvent être un peu plus lentes à leur prochain lancement, le temps de les reconstruire.",
+        "en": "Apps rebuild their caches when needed. They may be slightly slower the next time they open.",
+        "es": "Las apps vuelven a crear sus cachés cuando las necesitan. Pueden tardar algo más la próxima vez que se abran.",
+        "de": "Apps erstellen ihre Caches bei Bedarf neu. Beim nächsten Start können sie etwas langsamer sein."
+      }
+    },
+    {
+      "id": "user-logs",
+      "icon": "doc.plaintext",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": ["~/Library/Logs"],
+      "title": {
+        "fr": "Journaux",
+        "en": "Logs",
+        "es": "Registros",
+        "de": "Protokolle"
+      },
+      "detail": {
+        "fr": "Fichiers de log et rapports de diagnostic.",
+        "en": "Log files and diagnostic reports.",
+        "es": "Archivos de registro e informes de diagnóstico.",
+        "de": "Protokolldateien und Diagnoseberichte."
+      },
+      "afterRemoval": {
+        "fr": "Les apps écrivent de nouveaux journaux. Les anciens ne servent qu'à analyser un problème passé.",
+        "en": "Apps write new logs. Old ones are only useful to investigate a past problem.",
+        "es": "Las apps escriben registros nuevos. Los antiguos solo sirven para investigar un problema pasado.",
+        "de": "Apps schreiben neue Protokolle. Alte helfen nur bei der Analyse eines früheren Problems."
+      }
+    },
+    {
+      "id": "xcode-derived",
+      "icon": "hammer",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": ["~/Library/Developer/Xcode/DerivedData"],
+      "title": {
+        "fr": "Xcode – DerivedData",
+        "en": "Xcode – DerivedData",
+        "es": "Xcode – DerivedData",
+        "de": "Xcode – DerivedData"
+      },
+      "detail": {
+        "fr": "Produits de compilation intermédiaires, régénérés au prochain build.",
+        "en": "Intermediate build products, regenerated on the next build.",
+        "es": "Productos intermedios de compilación, regenerados en la siguiente compilación.",
+        "de": "Zwischenprodukte des Builds, beim nächsten Build neu erzeugt."
+      },
+      "afterRemoval": {
+        "fr": "Xcode reconstruit ces fichiers au prochain build, qui sera plus long.",
+        "en": "Xcode rebuilds these files on the next build, which takes longer.",
+        "es": "Xcode reconstruye estos archivos en la siguiente compilación, que tardará más.",
+        "de": "Xcode erzeugt diese Dateien beim nächsten Build neu, der dann länger dauert."
+      }
+    },
+    {
+      "id": "device-support",
+      "icon": "iphone",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": [
+        "~/Library/Developer/Xcode/iOS DeviceSupport",
+        "~/Library/Developer/Xcode/watchOS DeviceSupport",
+        "~/Library/Developer/Xcode/tvOS DeviceSupport",
+        "~/Library/Developer/Xcode/visionOS DeviceSupport"
+      ],
+      "title": {
+        "fr": "Xcode – Support des appareils",
+        "en": "Xcode – Device Support",
+        "es": "Xcode – Soporte de dispositivos",
+        "de": "Xcode – Gerätesupport"
+      },
+      "detail": {
+        "fr": "Symboles d'anciennes versions d'iOS, watchOS, tvOS, retéléchargés au besoin.",
+        "en": "Symbols for older iOS, watchOS and tvOS versions, downloaded again when needed.",
+        "es": "Símbolos de versiones antiguas de iOS, watchOS y tvOS, que se vuelven a descargar si hace falta.",
+        "de": "Symbole älterer iOS-, watchOS- und tvOS-Versionen, bei Bedarf neu geladen."
+      },
+      "afterRemoval": {
+        "fr": "Xcode les retélécharge quand vous branchez un appareil qui utilise cette version.",
+        "en": "Xcode downloads them again when you connect a device running that version.",
+        "es": "Xcode los vuelve a descargar cuando conectas un dispositivo con esa versión.",
+        "de": "Xcode lädt sie erneut, wenn du ein Gerät mit dieser Version anschließt."
+      }
+    },
+    {
+      "id": "simulator-caches",
+      "icon": "ipad",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": ["~/Library/Developer/CoreSimulator/Caches"],
+      "title": {
+        "fr": "Caches du simulateur",
+        "en": "Simulator caches",
+        "es": "Cachés del simulador",
+        "de": "Simulator-Caches"
+      },
+      "detail": {
+        "fr": "Caches des simulateurs iOS.",
+        "en": "iOS Simulator caches.",
+        "es": "Cachés de los simuladores de iOS.",
+        "de": "Caches der iOS-Simulatoren."
+      },
+      "afterRemoval": {
+        "fr": "Le simulateur les recrée à son prochain démarrage.",
+        "en": "The Simulator recreates them the next time it starts.",
+        "es": "El simulador los vuelve a crear la próxima vez que se inicia.",
+        "de": "Der Simulator erstellt sie beim nächsten Start neu."
+      }
+    },
+    {
+      "id": "xcode-archives",
+      "icon": "shippingbox",
+      "risk": "review",
+      "selectedByDefault": false,
+      "locations": ["~/Library/Developer/Xcode/Archives"],
+      "title": {
+        "fr": "Xcode – Archives",
+        "en": "Xcode – Archives",
+        "es": "Xcode – Archivos",
+        "de": "Xcode – Archive"
+      },
+      "detail": {
+        "fr": "Builds archivés. À garder si vous devez symboliser des rapports de plantage.",
+        "en": "Archived builds. Keep them if you need to symbolicate crash reports.",
+        "es": "Compilaciones archivadas. Consérvalas si necesitas simbolizar informes de fallos.",
+        "de": "Archivierte Builds. Behalte sie, wenn du Absturzberichte symbolisieren musst."
+      },
+      "afterRemoval": {
+        "fr": "Pas recréées. Sans l'archive, vous ne pourrez plus symboliser les rapports de plantage de ce build ni le soumettre à nouveau.",
+        "en": "Not recreated. Without the archive, you can no longer symbolicate crash reports for that build or submit it again.",
+        "es": "No se vuelven a crear. Sin el archivo, ya no podrás simbolizar los informes de fallos de esa compilación ni volver a enviarla.",
+        "de": "Werden nicht neu erstellt. Ohne das Archiv kannst du Absturzberichte dieses Builds nicht mehr symbolisieren und ihn nicht erneut einreichen."
+      }
+    },
+    {
+      "id": "dev-caches",
+      "icon": "terminal",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "target": "location",
+      "locations": ["~/.npm/_cacache", "~/.gradle/caches", "~/.cargo/registry/cache"],
+      "title": {
+        "fr": "Caches de développement",
+        "en": "Developer caches",
+        "es": "Cachés de desarrollo",
+        "de": "Entwickler-Caches"
+      },
+      "detail": {
+        "fr": "Caches de npm, Gradle et Cargo.",
+        "en": "npm, Gradle and Cargo caches.",
+        "es": "Cachés de npm, Gradle y Cargo.",
+        "de": "Caches von npm, Gradle und Cargo."
+      },
+      "afterRemoval": {
+        "fr": "Les paquets sont retéléchargés à la prochaine installation, ce qui demande une connexion à Internet.",
+        "en": "Packages are downloaded again on the next install, which needs an internet connection.",
+        "es": "Los paquetes se vuelven a descargar en la siguiente instalación, lo que requiere conexión a internet.",
+        "de": "Pakete werden bei der nächsten Installation neu geladen, dafür ist eine Internetverbindung nötig."
+      }
+    },
+    {
+      "id": "mail-downloads",
+      "icon": "paperclip",
+      "risk": "review",
+      "selectedByDefault": false,
+      "locations": ["~/Library/Containers/com.apple.mail/Data/Library/Mail Downloads"],
+      "title": {
+        "fr": "Pièces jointes de Mail",
+        "en": "Mail attachments",
+        "es": "Adjuntos de Mail",
+        "de": "Mail-Anhänge"
+      },
+      "detail": {
+        "fr": "Copies locales des pièces jointes ouvertes ; elles restent dans les e-mails.",
+        "en": "Local copies of opened attachments; they stay in your emails.",
+        "es": "Copias locales de los adjuntos abiertos; siguen en los correos.",
+        "de": "Lokale Kopien geöffneter Anhänge; sie bleiben in den E-Mails."
+      },
+      "afterRemoval": {
+        "fr": "Les pièces jointes restent dans les e-mails. Seules les modifications faites directement dans une pièce jointe ouverte depuis Mail seraient perdues.",
+        "en": "Attachments stay in your emails. Only changes made directly to an attachment opened from Mail would be lost.",
+        "es": "Los adjuntos siguen en los correos. Solo se perderían los cambios hechos directamente en un adjunto abierto desde Mail.",
+        "de": "Die Anhänge bleiben in den E-Mails. Verloren gingen nur Änderungen, die direkt an einem aus Mail geöffneten Anhang gemacht wurden."
+      }
+    },
+    {
+      "id": "installers",
+      "icon": "opticaldiscdrive",
+      "risk": "review",
+      "selectedByDefault": false,
+      "locations": ["~/Downloads"],
+      "extensions": ["dmg", "pkg", "iso", "xip"],
+      "title": {
+        "fr": "Images disque et installeurs",
+        "en": "Disk images and installers",
+        "es": "Imágenes de disco e instaladores",
+        "de": "Disk-Images und Installationsprogramme"
+      },
+      "detail": {
+        "fr": "Fichiers .dmg, .pkg, .iso et .xip du dossier Téléchargements.",
+        "en": ".dmg, .pkg, .iso and .xip files in your Downloads folder.",
+        "es": "Archivos .dmg, .pkg, .iso y .xip de la carpeta Descargas.",
+        "de": ".dmg-, .pkg-, .iso- und .xip-Dateien im Ordner „Downloads“."
+      },
+      "afterRemoval": {
+        "fr": "Pas recréés. Vous pourrez retélécharger l'installeur sur le site de l'éditeur si besoin.",
+        "en": "Not recreated. You can download the installer again from the developer's website if needed.",
+        "es": "No se vuelven a crear. Si hace falta, puedes volver a descargar el instalador desde la web del desarrollador.",
+        "de": "Werden nicht neu erstellt. Bei Bedarf kannst du das Installationsprogramm erneut von der Website des Herstellers laden."
+      }
+    },
+    {
+      "id": "ios-backups",
+      "icon": "externaldrive",
+      "risk": "review",
+      "selectedByDefault": false,
+      "locations": ["~/Library/Application Support/MobileSync/Backup"],
+      "title": {
+        "fr": "Sauvegardes iPhone et iPad",
+        "en": "iPhone and iPad backups",
+        "es": "Copias de seguridad de iPhone y iPad",
+        "de": "iPhone- und iPad-Backups"
+      },
+      "detail": {
+        "fr": "Sauvegardes locales d'appareils iOS.",
+        "en": "Local backups of iOS devices.",
+        "es": "Copias locales de dispositivos iOS.",
+        "de": "Lokale Backups von iOS-Geräten."
+      },
+      "afterRemoval": {
+        "fr": "Pas recréées. C'est peut-être la seule sauvegarde de votre appareil : vérifiez qu'il en existe une sur iCloud ou une plus récente.",
+        "en": "Not recreated. This may be your device's only backup: check that there is one in iCloud or a newer one.",
+        "es": "No se vuelven a crear. Puede ser la única copia de tu dispositivo: comprueba que hay una en iCloud o una más reciente.",
+        "de": "Werden nicht neu erstellt. Es könnte das einzige Backup deines Geräts sein: Prüfe, ob es eins in iCloud oder ein neueres gibt."
+      }
+    },
+    {
+      "id": "trash",
+      "icon": "trash",
+      "risk": "irreversible",
+      "selectedByDefault": true,
+      "permanent": true,
+      "locations": ["~/.Trash"],
+      "includeHidden": true,
+      "exclude": [".DS_Store"],
+      "title": {
+        "fr": "Corbeille",
+        "en": "Trash",
+        "es": "Papelera",
+        "de": "Papierkorb"
+      },
+      "detail": {
+        "fr": "Éléments déjà dans la Corbeille. Suppression définitive.",
+        "en": "Items already in the Trash. Deleted permanently.",
+        "es": "Elementos que ya están en la Papelera. Se eliminan definitivamente.",
+        "de": "Objekte, die schon im Papierkorb liegen. Endgültiges Löschen."
+      },
+      "afterRemoval": {
+        "fr": "Supprimés définitivement : ils ne pourront pas être récupérés, sauf depuis une sauvegarde Time Machine.",
+        "en": "Deleted permanently: they can't be recovered, except from a Time Machine backup.",
+        "es": "Se eliminan definitivamente: no se pueden recuperar, salvo desde una copia de Time Machine.",
+        "de": "Endgültig gelöscht: Sie lassen sich nicht wiederherstellen, außer aus einem Time-Machine-Backup."
+      }
+    }
+  ]
+}

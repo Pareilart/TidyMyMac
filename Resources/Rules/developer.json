@@ -1,0 +1,151 @@
+{
+  "profile": {
+    "id": "developer",
+    "icon": "chevron.left.forwardslash.chevron.right",
+    "tint": "sky",
+    "detect": ["~/Library/Developer", "~/.npm", "~/.gradle", "~/.cargo", "~/.m2"],
+    "title": { "fr": "Développeur", "en": "Developer", "es": "Desarrollador", "de": "Entwickler" },
+    "detail": {
+      "fr": "Dépendances de projets, caches de gestionnaires de paquets et outils de build.",
+      "en": "Project dependencies, package manager caches and build tools.",
+      "es": "Dependencias de proyectos, cachés de gestores de paquetes y herramientas de compilación.",
+      "de": "Projektabhängigkeiten, Caches von Paketmanagern und Build-Werkzeuge."
+    }
+  },
+  "rules": [
+    {
+      "id": "dev-node-modules",
+      "icon": "shippingbox",
+      "risk": "safe",
+      "selectedByDefault": false,
+      "target": "search",
+      "names": ["node_modules"],
+      "maxDepth": 5,
+      "olderThanDays": 30,
+      "locations": [
+        "~/Developer", "~/Projects", "~/Code", "~/dev", "~/src", "~/Sites", "~/GitHub", "~/repos",
+        "~/workspace", "~/Documents", "~/Desktop"
+      ],
+      "title": {
+        "fr": "Dossiers node_modules",
+        "en": "node_modules folders",
+        "es": "Carpetas node_modules",
+        "de": "node_modules-Ordner"
+      },
+      "detail": {
+        "fr": "Dépendances JavaScript installées il y a plus de 30 jours.",
+        "en": "JavaScript dependencies installed more than 30 days ago.",
+        "es": "Dependencias JavaScript instaladas hace más de 30 días.",
+        "de": "JavaScript-Abhängigkeiten, die vor mehr als 30 Tagen installiert wurden."
+      },
+      "afterRemoval": {
+        "fr": "Lancez npm install (ou yarn, pnpm) dans le projet pour les réinstaller. Il faut une connexion à Internet.",
+        "en": "Run npm install (or yarn, pnpm) in the project to reinstall them. This needs an internet connection.",
+        "es": "Ejecuta npm install (o yarn, pnpm) en el proyecto para reinstalarlas. Hace falta conexión a internet.",
+        "de": "Führe im Projekt npm install (oder yarn, pnpm) aus, um sie neu zu installieren. Dafür ist eine Internetverbindung nötig."
+      }
+    },
+    {
+      "id": "dev-gradle-dists",
+      "icon": "hammer",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "locations": ["~/.gradle/wrapper/dists"],
+      "title": {
+        "fr": "Distributions Gradle",
+        "en": "Gradle distributions",
+        "es": "Distribuciones de Gradle",
+        "de": "Gradle-Distributionen"
+      },
+      "detail": {
+        "fr": "Versions de Gradle téléchargées par le wrapper des projets.",
+        "en": "Gradle versions downloaded by project wrappers.",
+        "es": "Versiones de Gradle descargadas por el wrapper de los proyectos.",
+        "de": "Gradle-Versionen, die der Wrapper der Projekte geladen hat."
+      },
+      "afterRemoval": {
+        "fr": "Le wrapper retélécharge la version dont un projet a besoin à son prochain build.",
+        "en": "The wrapper downloads the version a project needs again on its next build.",
+        "es": "El wrapper vuelve a descargar la versión que necesita un proyecto en su siguiente compilación.",
+        "de": "Der Wrapper lädt die benötigte Version beim nächsten Build des Projekts erneut."
+      }
+    },
+    {
+      "id": "dev-cargo-sources",
+      "icon": "terminal",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "target": "location",
+      "locations": ["~/.cargo/registry/src"],
+      "title": {
+        "fr": "Sources Cargo extraites",
+        "en": "Extracted Cargo sources",
+        "es": "Fuentes de Cargo extraídas",
+        "de": "Entpackte Cargo-Quellen"
+      },
+      "detail": {
+        "fr": "Code source des crates Rust, décompressé depuis le cache.",
+        "en": "Source code of Rust crates, unpacked from the cache.",
+        "es": "Código fuente de los crates de Rust, descomprimido desde la caché.",
+        "de": "Quellcode der Rust-Crates, aus dem Cache entpackt."
+      },
+      "afterRemoval": {
+        "fr": "Cargo les extrait à nouveau au prochain build, ou les retélécharge si le cache a aussi été vidé.",
+        "en": "Cargo unpacks them again on the next build, or downloads them if the cache was emptied too.",
+        "es": "Cargo los vuelve a extraer en la siguiente compilación, o los descarga si la caché también se vació.",
+        "de": "Cargo entpackt sie beim nächsten Build erneut oder lädt sie, wenn auch der Cache geleert wurde."
+      }
+    },
+    {
+      "id": "dev-maven-repository",
+      "icon": "archivebox",
+      "risk": "review",
+      "selectedByDefault": false,
+      "target": "location",
+      "locations": ["~/.m2/repository"],
+      "title": {
+        "fr": "Dépôt local Maven",
+        "en": "Local Maven repository",
+        "es": "Repositorio local de Maven",
+        "de": "Lokales Maven-Repository"
+      },
+      "detail": {
+        "fr": "Dépendances Java téléchargées par Maven.",
+        "en": "Java dependencies downloaded by Maven.",
+        "es": "Dependencias de Java descargadas por Maven.",
+        "de": "Von Maven geladene Java-Abhängigkeiten."
+      },
+      "afterRemoval": {
+        "fr": "Maven retélécharge ce qui manque. Les artefacts que vous avez installés vous-même (mvn install) devront être recompilés.",
+        "en": "Maven downloads what's missing again. Artifacts you installed yourself (mvn install) must be built again.",
+        "es": "Maven vuelve a descargar lo que falta. Los artefactos que instalaste tú (mvn install) tendrán que compilarse de nuevo.",
+        "de": "Maven lädt Fehlendes erneut. Selbst installierte Artefakte (mvn install) musst du neu bauen."
+      }
+    },
+    {
+      "id": "dev-xdg-cache",
+      "icon": "tray.full",
+      "risk": "review",
+      "selectedByDefault": false,
+      "locations": ["~/.cache"],
+      "title": {
+        "fr": "Caches d'outils en ligne de commande",
+        "en": "Command-line tool caches",
+        "es": "Cachés de herramientas de línea de comandos",
+        "de": "Caches von Befehlszeilenwerkzeugen"
+      },
+      "detail": {
+        "fr": "Dossier ~/.cache : pip, pre-commit, Hugging Face et d'autres outils.",
+        "en": "The ~/.cache folder: pip, pre-commit, Hugging Face and other tools.",
+        "es": "La carpeta ~/.cache: pip, pre-commit, Hugging Face y otras herramientas.",
+        "de": "Der Ordner ~/.cache: pip, pre-commit, Hugging Face und andere Werkzeuge."
+      },
+      "afterRemoval": {
+        "fr": "La plupart sont recréés au besoin, mais certains contiennent de gros téléchargements, comme des modèles d'IA, qu'il faudra récupérer à nouveau.",
+        "en": "Most are recreated when needed, but some hold large downloads, such as AI models, that you'll have to fetch again.",
+        "es": "La mayoría se vuelven a crear cuando hace falta, pero algunos contienen descargas grandes, como modelos de IA, que habrá que volver a obtener.",
+        "de": "Die meisten werden bei Bedarf neu erstellt, manche enthalten aber große Downloads wie KI-Modelle, die du erneut laden musst."
+      }
+    }
+  ]
+}

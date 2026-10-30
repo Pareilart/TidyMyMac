@@ -1,0 +1,100 @@
+{
+  "profile": {
+    "id": "photographer",
+    "icon": "camera",
+    "tint": "peach",
+    "detect": ["~/Pictures/Lightroom", "/Applications/Adobe Lightroom Classic", "/Applications/Capture One.app"],
+    "title": { "fr": "Photographe", "en": "Photographer", "es": "Fotógrafo", "de": "Fotograf" },
+    "detail": {
+      "fr": "Aperçus et sauvegardes des catalogues photo.",
+      "en": "Photo catalog previews and backups.",
+      "es": "Vistas previas y copias de seguridad de catálogos de fotos.",
+      "de": "Vorschauen und Backups von Fotokatalogen."
+    }
+  },
+  "rules": [
+    {
+      "id": "photo-lightroom-previews",
+      "icon": "photo.stack",
+      "risk": "safe",
+      "selectedByDefault": true,
+      "target": "search",
+      "names": ["*Previews.lrdata"],
+      "exclude": ["*Smart Previews.lrdata"],
+      "maxDepth": 4,
+      "locations": ["~/Pictures"],
+      "title": {
+        "fr": "Aperçus Lightroom Classic",
+        "en": "Lightroom Classic previews",
+        "es": "Vistas previas de Lightroom Classic",
+        "de": "Lightroom Classic-Vorschauen"
+      },
+      "detail": {
+        "fr": "Vignettes et aperçus des catalogues Lightroom.",
+        "en": "Thumbnails and previews of Lightroom catalogs.",
+        "es": "Miniaturas y vistas previas de los catálogos de Lightroom.",
+        "de": "Miniaturen und Vorschauen der Lightroom-Kataloge."
+      },
+      "afterRemoval": {
+        "fr": "Lightroom les recrée en parcourant vos photos, qui s'afficheront plus lentement d'ici là. Fermez Lightroom avant de nettoyer.",
+        "en": "Lightroom rebuilds them as you browse your photos, which display more slowly until then. Quit Lightroom before cleaning.",
+        "es": "Lightroom las vuelve a crear al recorrer tus fotos, que se mostrarán más despacio hasta entonces. Cierra Lightroom antes de limpiar.",
+        "de": "Lightroom erstellt sie beim Durchsehen deiner Fotos neu, die bis dahin langsamer erscheinen. Beende Lightroom vor dem Bereinigen."
+      }
+    },
+    {
+      "id": "photo-lightroom-smart-previews",
+      "icon": "photo.on.rectangle",
+      "risk": "review",
+      "selectedByDefault": false,
+      "target": "search",
+      "names": ["*Smart Previews.lrdata"],
+      "maxDepth": 4,
+      "locations": ["~/Pictures"],
+      "title": {
+        "fr": "Aperçus dynamiques Lightroom",
+        "en": "Lightroom Smart Previews",
+        "es": "Vistas previas inteligentes de Lightroom",
+        "de": "Lightroom Smart-Vorschauen"
+      },
+      "detail": {
+        "fr": "Copies allégées pour retoucher sans les originaux.",
+        "en": "Lightweight copies for editing without the originals.",
+        "es": "Copias ligeras para editar sin los originales.",
+        "de": "Schlanke Kopien zum Bearbeiten ohne die Originale."
+      },
+      "afterRemoval": {
+        "fr": "Sans elles, vous ne pourrez plus retoucher les photos dont les originaux sont sur un disque débranché. Lightroom peut les recréer tant que les originaux sont accessibles.",
+        "en": "Without them, you can't edit photos whose originals are on a disconnected drive. Lightroom can rebuild them while the originals are available.",
+        "es": "Sin ellas, no podrás editar las fotos cuyos originales estén en un disco desconectado. Lightroom puede volver a crearlas mientras los originales estén disponibles.",
+        "de": "Ohne sie kannst du Fotos, deren Originale auf einem getrennten Laufwerk liegen, nicht bearbeiten. Lightroom kann sie neu erstellen, solange die Originale verfügbar sind."
+      }
+    },
+    {
+      "id": "photo-lightroom-backups",
+      "icon": "clock.arrow.circlepath",
+      "risk": "review",
+      "selectedByDefault": false,
+      "olderThanDays": 90,
+      "locations": ["~/Pictures/Lightroom/Backups"],
+      "title": {
+        "fr": "Anciennes sauvegardes de catalogue Lightroom",
+        "en": "Old Lightroom catalog backups",
+        "es": "Copias antiguas del catálogo de Lightroom",
+        "de": "Alte Lightroom-Katalog-Backups"
+      },
+      "detail": {
+        "fr": "Sauvegardes de plus de 90 jours.",
+        "en": "Backups older than 90 days.",
+        "es": "Copias de más de 90 días.",
+        "de": "Backups, die älter als 90 Tage sind."
+      },
+      "afterRemoval": {
+        "fr": "Pas recréées. Gardez au moins une sauvegarde récente de votre catalogue.",
+        "en": "Not recreated. Keep at least one recent backup of your catalog.",
+        "es": "No se vuelven a crear. Conserva al menos una copia reciente de tu catálogo.",
+        "de": "Werden nicht neu erstellt. Behalte mindestens ein aktuelles Backup deines Katalogs."
+      }
+    }
+  ]
+}

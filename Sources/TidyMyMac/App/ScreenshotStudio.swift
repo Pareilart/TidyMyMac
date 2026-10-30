@@ -24,10 +24,12 @@ enum ScreenshotStudio {
         if let flag = arguments.firstIndex(of: "--app-icon"), flag + 1 < arguments.count {
             exportAppIcon(to: URL(fileURLWithPath: arguments[flag + 1]))
         }
-        if let flag = arguments.firstIndex(of: "--language"), flag + 1 < arguments.count,
-           let language = AppLanguage(rawValue: arguments[flag + 1]) {
-            AppLocalization.shared.apply(language, persist: false)
+        // Langue demandée, sinon celle du lancement (-AppleLanguages), jamais celle enregistrée dans les Réglages.
+        let requested = arguments.firstIndex(of: "--language").flatMap { flag in
+            flag + 1 < arguments.count ? AppLanguage(rawValue: arguments[flag + 1]) : nil
         }
+        let launched = AppLanguage(rawValue: Bundle.main.preferredLocalizations.first ?? "")
+        AppLocalization.shared.apply(requested ?? launched ?? .en, persist: false)
         guard let flag = arguments.firstIndex(of: "--screenshots"), flag + 1 < arguments.count else {
             print("Usage : TidyMyMac --screenshots <dossier>")
             exit(1)
@@ -41,6 +43,7 @@ enum ScreenshotStudio {
             ("03-space-explorer", .spaceExplorer),
             ("04-performance", .performance),
             ("05-ai-search", .search),
+            ("09-rules", .rules),
         ]
         for scene in scenes {
             let demo = DemoModels()
@@ -56,6 +59,10 @@ enum ScreenshotStudio {
             .environmentObject(demo.updates)
             .environmentObject(demo.search), size: nil), framed: false, to: directory, name: "06-menu-bar")
         save(capture(SettingsView().environmentObject(demo.updates), size: nil), framed: true, to: directory, name: "07-settings")
+        if let rule = RuleBook.load().builtIn.first(where: { $0.id == "installers" }) {
+            save(capture(RuleDetails(rule: rule).background(Theme.backgroundTop), size: nil),
+                 framed: false, to: directory, name: "08-rule-details")
+        }
         save(capture(AppIconArt().scaleEffect(0.25).frame(width: 256, height: 256), size: nil), framed: nil, to: directory, name: "logo")
 
         print("Captures enregistrées dans \(directory.path)")
@@ -159,6 +166,7 @@ enum ScreenshotStudio {
 private final class DemoModels {
     let navigation = AppNavigation()
     let junk = JunkModel()
+    let rules = RulesModel()
     let apps = AppsModel()
     let largeFiles = LargeFilesModel()
     let duplicates = DuplicatesModel()
@@ -174,6 +182,7 @@ private final class DemoModels {
         navigation.selection = module
         switch module {
         case .junk: fillJunk()
+        case .rules: rules.showDemo()
         case .spaceExplorer: fillSpaceExplorer()
         case .performance: fillPerformance()
         case .search: fillSearch()
@@ -182,6 +191,7 @@ private final class DemoModels {
         return ContentView()
             .environmentObject(navigation)
             .environmentObject(junk)
+            .environmentObject(rules)
             .environmentObject(apps)
             .environmentObject(largeFiles)
             .environmentObject(duplicates)
@@ -197,11 +207,11 @@ private final class DemoModels {
     }
 
     private func fillJunk() {
-        let categories = Dictionary(uniqueKeysWithValues: JunkCategory.all.map { ($0.id, $0) })
+        let rules = Dictionary(uniqueKeysWithValues: RuleBook.load().builtIn.map { ($0.id, $0) })
         func result(_ id: String, _ entries: [(String, Double)], selected: Bool = true) -> JunkResult? {
-            guard let category = categories[id] else { return nil }
+            guard let rule = rules[id] else { return nil }
             let items = entries.map { ScanItem(url: home($0.0), size: Int64($0.1 * Double(Self.gigabyte)), selected: selected) }
-            return JunkResult(category: category, items: items)
+            return JunkResult(rule: rule, items: items)
         }
         junk.results = [
             result("xcode-derived", [("Library/Developer/Xcode/DerivedData/MyApp-dkqf", 6.8), ("Library/Developer/Xcode/DerivedData/Widget-aebc", 1.9)]),
@@ -210,7 +220,7 @@ private final class DemoModels {
             result("trash", [(".Trash/Old project", 2.7)]),
             result("dev-caches", [(".npm/_cacache", 1.3)]),
             result("user-logs", [("Library/Logs/DiagnosticReports", 0.42)]),
-            result("mail-downloads", [("Library/Containers/com.apple.mail/Data/Library/Mail Downloads/Quote", 0.31)]),
+            result("mail-downloads", [("Library/Containers/com.apple.mail/Data/Library/Mail Downloads/Quote", 0.31)], selected: false),
             result("installers", [("Downloads/Installer.dmg", 1.2)], selected: false),
         ].compactMap { $0 }
         junk.phase = .ready

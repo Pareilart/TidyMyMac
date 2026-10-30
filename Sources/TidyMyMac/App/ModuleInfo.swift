@@ -47,6 +47,16 @@ extension Module {
                     ModuleFeature(icon: "paperclip", text: localized("Pièces jointes Mail et installeurs")),
                 ]
             )
+        case .rules:
+            return ModuleInfo(
+                tagline: localized("Choisissez ce que TidyMyMac nettoie, selon votre façon de travailler."),
+                accent: Theme.peach, heroSymbol: "slider.horizontal.3", actionTitle: localized("Ouvrir"),
+                features: [
+                    ModuleFeature(icon: "person.2", text: localized("Profils prêts à l'emploi")),
+                    ModuleFeature(icon: "plus.rectangle.on.folder", text: localized("Vos propres règles, sans code")),
+                    ModuleFeature(icon: "checkmark.shield", text: localized("Un niveau de risque pour chaque règle")),
+                ]
+            )
         case .largeFiles:
             return ModuleInfo(
                 tagline: localized("Retrouvez ce qui prend de la place sans que vous le sachiez."),

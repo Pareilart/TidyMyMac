@@ -26,6 +26,10 @@ enum FS {
         (try? url.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true
     }
 
+    static func modificationDate(_ url: URL) -> Date? {
+        (try? url.resourceValues(forKeys: [.contentModificationDateKey]))?.contentModificationDate
+    }
+
     static func fileSize(_ url: URL) -> Int64 {
         guard let values = try? url.resourceValues(forKeys: sizeKeys), values.isRegularFile == true else { return 0 }
         return Int64(values.totalFileAllocatedSize ?? values.fileAllocatedSize ?? 0)

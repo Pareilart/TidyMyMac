@@ -78,15 +78,17 @@ struct JunkCategoryRow: View {
                 ))
                 .toggleStyle(.checkbox)
                 .labelsHidden()
-                Image(systemName: result.category.icon)
+                Image(systemName: result.rule.icon)
                     .foregroundColor(.accentColor)
                     .frame(width: 22)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(result.category.title).font(.headline)
-                    Text(result.category.detail).font(.caption).foregroundColor(.secondary)
+                    Text(result.rule.title).font(.headline)
+                    Text(result.rule.detail).font(.caption).foregroundColor(.secondary)
                 }
                 Spacer()
+                RiskBadge(risk: result.rule.effectiveRisk)
                 sizeLabel
+                RuleInfoButton(rule: result.rule)
             }
             .padding(.vertical, 4)
         }

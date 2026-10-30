@@ -18,6 +18,8 @@ cp "$BIN_DIR/TidyMyMac" "$APP/Contents/MacOS/TidyMyMac"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 # Traductions : français (langue source), anglais, espagnol, allemand.
 cp -R Resources/Localization/*.lproj "$APP/Contents/Resources/"
+# Règles de nettoyage intégrées (docs/RULES.md).
+cp -R Resources/Rules "$APP/Contents/Resources/Rules"
 if [ -f Resources/AppIcon.icns ]; then
     cp Resources/AppIcon.icns "$APP/Contents/Resources/AppIcon.icns"
 fi
