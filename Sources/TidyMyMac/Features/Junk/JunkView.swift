@@ -2,6 +2,7 @@ import SwiftUI
 
 struct JunkView: View {
     @EnvironmentObject var model: JunkModel
+    @StateObject private var showPlan = ViewState(false)
 
     var body: some View {
         if model.phase == .idle {
@@ -48,11 +49,14 @@ struct JunkView: View {
             Divider()
             ActionBar(
                 summary: "\(model.selectedSize.formattedBytes) sélectionnés sur \(model.totalSize.formattedBytes)",
-                actionTitle: "Nettoyer",
+                actionTitle: "Nettoyer…",
                 disabled: model.selectedSize == 0
             ) {
-                Task { await model.clean() }
+                showPlan.value = true
             }
+        }
+        .sheet(isPresented: $showPlan.value) {
+            CleanupPlanSheet(model: model) { Task { await model.clean() } }
         }
     }
 }

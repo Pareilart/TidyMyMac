@@ -6,6 +6,14 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+### Ajouté
+
+- Plan de nettoyage : avant de nettoyer les fichiers inutiles, y compris depuis l'Analyse intelligente, la liste de tout
+  ce qui sera supprimé (taille, date de modification, règle, niveau de risque, Corbeille ou suppression définitive),
+  avec recherche, filtres par risque, règle et taille, tri, retrait d'un élément et export CSV ou JSON. Rien n'est
+  supprimé avant confirmation.
+- `TidyMyMac --list-rules --json` : la simulation complète des règles actives, au format du plan de nettoyage.
+
 ## [0.4.0] - 2026-10-30
 
 ### Ajouté

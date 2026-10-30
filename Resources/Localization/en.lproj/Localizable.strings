@@ -572,3 +572,30 @@
 "Annuler la désinstallation" = "Undo Uninstall";
 "Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler." = "These items are in the Trash: the space is only freed once you empty it. Until then, you can undo.";
 "Annuler ce nettoyage" = "Undo This Cleanup";
+
+/* Plan de nettoyage */
+"Plan de nettoyage" = "Cleanup Plan";
+"Voici exactement ce qui sera supprimé. Rien ne bouge tant que vous n'avez pas confirmé." = "Here is exactly what will be removed. Nothing moves until you confirm.";
+"Plus gros d'abord" = "Largest first";
+"Plus anciens d'abord" = "Oldest first";
+"Par nom" = "By name";
+"Rechercher un nom ou un chemin" = "Search a name or path";
+"Risque" = "Risk";
+"Tous les risques" = "All risks";
+"Règle" = "Rule";
+"Toutes les règles" = "All rules";
+"Toutes les tailles" = "All sizes";
+"%@ et plus" = "%@ and up";
+"Tri" = "Sort";
+"Exporter le plan" = "Export Plan";
+"Le plan est vide : rien ne sera supprimé." = "The plan is empty: nothing will be removed.";
+"Aucun élément ne correspond aux filtres." = "No items match the filters.";
+"Affichage : %lld sur %lld. Le nettoyage porte sur tout le plan." = "Showing %lld of %lld. The cleanup covers the whole plan.";
+"Nettoyer %lld élément(s) · %@" = "Clean Up %lld Item(s) · %@";
+"Tout va dans la Corbeille : vous pourrez annuler tant qu'elle n'est pas vidée." = "Everything goes to the Trash: you can undo until it’s emptied.";
+"%lld vers la Corbeille, %lld supprimé(s) définitivement, sans retour possible." = "%lld to the Trash, %lld deleted permanently with no way back.";
+"modifié %@" = "modified %@";
+"Placé dans la Corbeille" = "Moved to the Trash";
+"Retirer du plan" = "Remove from Plan";
+"Nettoyer…" = "Clean Up…";
+"Nettoyer %@…" = "Clean Up %@…";

@@ -572,3 +572,30 @@
 "Annuler la désinstallation" = "Deinstallation widerrufen";
 "Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler." = "Diese Objekte liegen im Papierkorb: Der Speicher wird erst frei, wenn du ihn leerst. Bis dahin kannst du alles widerrufen.";
 "Annuler ce nettoyage" = "Diese Bereinigung widerrufen";
+
+/* Plan de nettoyage */
+"Plan de nettoyage" = "Bereinigungsplan";
+"Voici exactement ce qui sera supprimé. Rien ne bouge tant que vous n'avez pas confirmé." = "Genau das wird entfernt. Nichts passiert, bevor du bestätigst.";
+"Plus gros d'abord" = "Größte zuerst";
+"Plus anciens d'abord" = "Älteste zuerst";
+"Par nom" = "Nach Name";
+"Rechercher un nom ou un chemin" = "Name oder Pfad suchen";
+"Risque" = "Risiko";
+"Tous les risques" = "Alle Risiken";
+"Règle" = "Regel";
+"Toutes les règles" = "Alle Regeln";
+"Toutes les tailles" = "Alle Größen";
+"%@ et plus" = "Ab %@";
+"Tri" = "Sortierung";
+"Exporter le plan" = "Plan exportieren";
+"Le plan est vide : rien ne sera supprimé." = "Der Plan ist leer: Es wird nichts entfernt.";
+"Aucun élément ne correspond aux filtres." = "Keine Objekte entsprechen den Filtern.";
+"Affichage : %lld sur %lld. Le nettoyage porte sur tout le plan." = "%lld von %lld angezeigt. Die Bereinigung umfasst den ganzen Plan.";
+"Nettoyer %lld élément(s) · %@" = "%lld Objekt(e) bereinigen · %@";
+"Tout va dans la Corbeille : vous pourrez annuler tant qu'elle n'est pas vidée." = "Alles landet im Papierkorb: Du kannst es widerrufen, solange er nicht geleert ist.";
+"%lld vers la Corbeille, %lld supprimé(s) définitivement, sans retour possible." = "%lld in den Papierkorb, %lld endgültig gelöscht, ohne Rückweg.";
+"modifié %@" = "geändert %@";
+"Placé dans la Corbeille" = "In den Papierkorb gelegt";
+"Retirer du plan" = "Aus dem Plan entfernen";
+"Nettoyer…" = "Bereinigen …";
+"Nettoyer %@…" = "%@ bereinigen …";

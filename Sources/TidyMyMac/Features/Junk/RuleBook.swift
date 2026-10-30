@@ -183,6 +183,13 @@ enum RuleBook {
     /// `TidyMyMac --list-rules` : ce que chaque règle active trouverait, sans rien supprimer.
     static func printReport() {
         let contents = load()
+        // `--json` : la simulation complète, au format de l'export du plan de nettoyage.
+        if CommandLine.arguments.contains("--json") {
+            let json = (try? CleanupPlan.simulate(contents.activeRules).json()) ?? Data()
+            FileHandle.standardOutput.write(json)
+            FileHandle.standardOutput.write(Data("\n".utf8))
+            return
+        }
         for rule in contents.activeRules {
             let items = rule.locate()
             let size = items.reduce(Int64(0)) { $0 + FS.size(of: $1) }

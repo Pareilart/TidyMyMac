@@ -13,6 +13,7 @@ struct DashboardView: View {
     @EnvironmentObject var junk: JunkModel
     @EnvironmentObject var launchItems: LaunchItemsModel
     @StateObject private var state = DashboardState()
+    @StateObject private var showPlan = ViewState(false)
 
     private func openPerformance(_ route: PerformanceRoute) {
         navigation.performanceRoute = route
@@ -99,16 +100,21 @@ struct DashboardView: View {
                     Text("\(freed.formattedBytes) libérés").font(.system(.headline, design: .rounded)).foregroundColor(Theme.mint)
                 }
                 if junk.phase == .ready && junk.selectedSize > 0 {
-                    Button("Nettoyer \(junk.selectedSize.formattedBytes)") {
-                        Task {
-                            await junk.clean()
-                            state.disk = DiskInfo.current()
-                        }
-                    }
-                    .buttonStyle(PrimaryButtonStyle())
+                    Button("Nettoyer \(junk.selectedSize.formattedBytes)…") { showPlan.value = true }
+                        .buttonStyle(PrimaryButtonStyle())
                 }
             }
             .padding(.top, 4)
+        }
+        .sheet(isPresented: $showPlan.value) {
+            CleanupPlanSheet(model: junk) { cleanFromPlan() }
+        }
+    }
+
+    private func cleanFromPlan() {
+        Task {
+            await junk.clean()
+            state.disk = DiskInfo.current()
         }
     }
 

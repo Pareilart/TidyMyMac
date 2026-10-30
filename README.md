@@ -34,7 +34,7 @@
 | | |
 | --- | --- |
 | **Quick Check** | One click to find junk files, broken startup items and how much disk space is left, then clean up in place. |
-| **Junk Files** | App caches, logs, Xcode DerivedData, device support files and archives, simulator caches, npm / Gradle / Cargo caches, Mail attachments, downloaded installers, iOS backups and the Trash. Each category shows its risk level and what happens once it’s removed. |
+| **Junk Files** | App caches, logs, Xcode DerivedData, device support files and archives, simulator caches, npm / Gradle / Cargo caches, Mail attachments, downloaded installers, iOS backups and the Trash. Each category shows its risk level and what happens once it’s removed, and a cleanup plan lists every item before anything goes. |
 | **Rules & Profiles** | Turn on ready-made profiles (developer, photographer, video editor), switch any rule off, or create your own rules with a simple form and test them before use. |
 | **AI Search** | Find a document by describing it — *“my liability insurance certificate”* — even if its file name says nothing. Reads PDFs, Word files and scans (OCR). |
 | **Large Files** | Files and packages above a size threshold, with their last-opened date. |
@@ -68,6 +68,14 @@ happens afterwards and where it looks.
 
 <p align="center">
   <img src="docs/screenshots/08-rule-details.png" width="440" alt="Rule details">
+</p>
+
+Before anything is removed, the **Cleanup Plan** lists every item that will go: its size, last modification, the rule
+that proposed it, its risk level and whether it goes to the Trash or is deleted for good. Search and filter it, take
+items out, or export it to CSV or JSON. Nothing moves until you confirm.
+
+<p align="center">
+  <img src="docs/screenshots/12-cleanup-plan.png" alt="Cleanup plan">
 </p>
 
 ### Rules & Profiles
@@ -185,7 +193,8 @@ then uses it so permissions survive rebuilds.
 - Duplicates always keep at least one copy.
 - Anything that went to the Trash can be put back from the History until you empty the Trash. TidyMyMac also tells
   you that the space is only really freed once the Trash is emptied.
-- Nothing is removed without being listed first, with its size and location.
+- Nothing is removed without being listed first: Junk Files shows a cleanup plan with every item, its rule, risk and
+  destination, and waits for your confirmation.
 - Every junk category states its risk level and what happens after removal. No rule can remove a system folder or a
   personal folder such as Documents, or sweep your whole home or Library folder.
 - System actions go through the standard macOS administrator prompt.
@@ -230,7 +239,7 @@ for a text and `%lld` for a number.
 | `scripts/make-icon.sh` | Regenerates `Resources/AppIcon.icns` from the icon drawn in SwiftUI (`UI/BrandGlyph.swift`). |
 
 - **Rules**: `build/TidyMyMac.app/Contents/MacOS/TidyMyMac --list-rules` prints what each active cleanup rule would
-  find, without removing anything. `./scripts/check-translations.sh` also validates the built-in rules.
+  find, without removing anything; add `--json` for the full simulation in the cleanup plan format. `./scripts/check-translations.sh` also validates the built-in rules.
 - **Screenshots**: `build/TidyMyMac.app/Contents/MacOS/TidyMyMac --screenshots docs/screenshots -AppleLanguages "(en)" -AppleLocale en_US`
   renders every screen with sample data (no real files).
 - **Releases and updates**: the version lives in `VERSION` and changes are listed in `CHANGELOG.md`. Set
@@ -239,7 +248,6 @@ for a text and `%lld` for a number.
 
 ## Roadmap
 
-- A detailed file-by-file preview, with export, before deleting.
 - More profession profiles (musicians, 3D artists, small IT teams).
 - Visible Time Machine snapshot management and an explanation of “System Data”.
 - Scheduled cleanups per module, plus a command-line tool.

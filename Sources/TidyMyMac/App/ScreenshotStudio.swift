@@ -65,6 +65,7 @@ enum ScreenshotStudio {
             .environmentObject(demo.search), size: nil), framed: false, to: directory, name: "06-menu-bar")
         save(capture(SettingsView().environmentObject(demo.updates), size: nil), framed: true, to: directory, name: "07-settings")
         save(capture(DemoModels().cleanupDone(), size: windowSize), framed: true, to: directory, name: "11-undo")
+        save(capture(DemoModels().cleanupPlan(), size: nil), framed: true, to: directory, name: "12-cleanup-plan")
         if let rule = RuleBook.load().builtIn.first(where: { $0.id == "installers" }) {
             save(capture(RuleDetails(rule: rule).background(Theme.backgroundTop), size: nil),
                  framed: false, to: directory, name: "08-rule-details")
@@ -183,6 +184,12 @@ private final class DemoModels {
     let updates = UpdateChecker()
 
     private static let gigabyte: Int64 = 1_000_000_000
+
+    /// Plan de nettoyage des fichiers inutiles fictifs.
+    func cleanupPlan() -> some View {
+        fillJunk()
+        return CleanupPlanSheet(model: junk) {}
+    }
 
     /// Écran de fin d'un nettoyage, avec « Annuler ce nettoyage ».
     func cleanupDone() -> some View {

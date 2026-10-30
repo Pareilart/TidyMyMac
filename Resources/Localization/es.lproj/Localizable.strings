@@ -572,3 +572,30 @@
 "Annuler la désinstallation" = "Deshacer la desinstalación";
 "Ces éléments sont dans la Corbeille : l'espace sera vraiment libéré quand vous la viderez. D'ici là, vous pouvez annuler." = "Estos elementos están en la Papelera: el espacio solo se libera cuando la vacíes. Hasta entonces, puedes deshacer.";
 "Annuler ce nettoyage" = "Deshacer esta limpieza";
+
+/* Plan de nettoyage */
+"Plan de nettoyage" = "Plan de limpieza";
+"Voici exactement ce qui sera supprimé. Rien ne bouge tant que vous n'avez pas confirmé." = "Esto es exactamente lo que se eliminará. No se mueve nada hasta que confirmes.";
+"Plus gros d'abord" = "Los más grandes primero";
+"Plus anciens d'abord" = "Los más antiguos primero";
+"Par nom" = "Por nombre";
+"Rechercher un nom ou un chemin" = "Buscar un nombre o una ruta";
+"Risque" = "Riesgo";
+"Tous les risques" = "Todos los riesgos";
+"Règle" = "Regla";
+"Toutes les règles" = "Todas las reglas";
+"Toutes les tailles" = "Todos los tamaños";
+"%@ et plus" = "%@ o más";
+"Tri" = "Orden";
+"Exporter le plan" = "Exportar el plan";
+"Le plan est vide : rien ne sera supprimé." = "El plan está vacío: no se eliminará nada.";
+"Aucun élément ne correspond aux filtres." = "Ningún elemento coincide con los filtros.";
+"Affichage : %lld sur %lld. Le nettoyage porte sur tout le plan." = "Se muestran %lld de %lld. La limpieza abarca todo el plan.";
+"Nettoyer %lld élément(s) · %@" = "Limpiar %lld elemento(s) · %@";
+"Tout va dans la Corbeille : vous pourrez annuler tant qu'elle n'est pas vidée." = "Todo va a la Papelera: podrás deshacerlo mientras no la vacíes.";
+"%lld vers la Corbeille, %lld supprimé(s) définitivement, sans retour possible." = "%lld a la Papelera, %lld eliminado(s) definitivamente, sin vuelta atrás.";
+"modifié %@" = "modificado %@";
+"Placé dans la Corbeille" = "Enviado a la Papelera";
+"Retirer du plan" = "Quitar del plan";
+"Nettoyer…" = "Limpiar…";
+"Nettoyer %@…" = "Limpiar %@…";

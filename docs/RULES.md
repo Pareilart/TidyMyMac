@@ -94,5 +94,5 @@ Before opening a pull request:
 1. run `./scripts/check-translations.sh`: it also checks the rules (required fields, risk level, unique ids,
    translations);
 2. build the app and run `build/TidyMyMac.app/Contents/MacOS/TidyMyMac --list-rules -enabledRuleProfiles '(your-profile)'`
-   to see what each rule finds on your Mac, without removing anything;
+   to see what each rule finds on your Mac, without removing anything (add `--json` for a machine-readable plan);
 3. in the pull request, explain what the rule removes, why it's safe, and how the data comes back.
