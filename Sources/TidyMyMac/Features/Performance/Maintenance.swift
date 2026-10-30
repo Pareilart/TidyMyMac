@@ -169,6 +169,15 @@ final class MaintenanceModel: ObservableObject {
         outcomes.merge(result.outcomes) { _, new in new }
         lastGains = result.gains
         Stats.record(freed: result.gains.diskRecovered + result.gains.mailCompacted)
+        ActivityJournal.shared.record(JournalEntry(
+            kind: .maintenance,
+            steps: tasks.map { task in
+                let outcome = result.outcomes[task.id]
+                return JournalStep(title: task.title, detail: outcome?.message, succeeded: outcome?.succeeded == true)
+            },
+            freed: result.gains.diskRecovered + result.gains.mailCompacted,
+            memoryFreed: result.gains.memoryFreed
+        ))
         if result.gains.succeeded > 0 {
             lastRun = Date()
             UserDefaults.standard.set(lastRun, forKey: Self.lastRunKey)

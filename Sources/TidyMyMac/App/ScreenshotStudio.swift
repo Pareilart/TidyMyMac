@@ -30,6 +30,10 @@ enum ScreenshotStudio {
         }
         let launched = AppLanguage(rawValue: Bundle.main.preferredLocalizations.first ?? "")
         AppLocalization.shared.apply(requested ?? launched ?? .en, persist: false)
+        // Total fictif, en mémoire seulement : les captures ne montrent pas les chiffres de ce Mac.
+        var argumentDomain = UserDefaults.standard.volatileDomain(forName: UserDefaults.argumentDomain)
+        argumentDomain[Stats.totalFreedKey] = 48_600_000_000
+        UserDefaults.standard.setVolatileDomain(argumentDomain, forName: UserDefaults.argumentDomain)
         guard let flag = arguments.firstIndex(of: "--screenshots"), flag + 1 < arguments.count else {
             print("Usage : TidyMyMac --screenshots <dossier>")
             exit(1)
@@ -44,6 +48,7 @@ enum ScreenshotStudio {
             ("04-performance", .performance),
             ("05-ai-search", .search),
             ("09-rules", .rules),
+            ("10-history", .history),
         ]
         for scene in scenes {
             let demo = DemoModels()
@@ -183,6 +188,7 @@ private final class DemoModels {
         switch module {
         case .junk: fillJunk()
         case .rules: rules.showDemo()
+        case .history: ActivityJournal.shared.showDemo()
         case .spaceExplorer: fillSpaceExplorer()
         case .performance: fillPerformance()
         case .search: fillSearch()

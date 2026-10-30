@@ -147,6 +147,7 @@ final class SystemMonitor: ObservableObject {
             }.value
             if let gain {
                 memoryGainText = gain > 0 ? localized("\(Int64(gain).formattedBytes) libérés") : "Déjà optimisée"
+                ActivityJournal.shared.record(JournalEntry(kind: .memory, memoryFreed: Int64(gain)))
             }
             memoryFreeing = false
             refresh()

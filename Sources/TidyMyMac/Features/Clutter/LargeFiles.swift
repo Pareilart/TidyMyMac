@@ -63,12 +63,14 @@ final class LargeFilesModel: ObservableObject {
         phase = .cleaning
         let selected = files.filter(\.selected)
         let urls = selected.map(\.url)
-        let failed = await Task.detached { Remover.remove(urls, permanently: false) }.value
-        let failedSet = Set(failed)
-        let freed = selected.filter { !failedSet.contains($0.url) }.reduce(0) { $0 + $1.size }
-        failures = failed
+        let removal = await Task.detached { Remover.perform(urls, permanently: false) }.value
+        let freed = selected.filter { removal.removed.contains($0.url) }.reduce(0) { $0 + $1.size }
+        failures = removal.failed
         files = []
         Stats.record(freed: freed)
+        ActivityJournal.shared.recordRemoval(
+            .largeFiles, removal: removal, candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
+        )
         phase = .done(freed: freed)
     }
 }

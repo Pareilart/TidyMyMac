@@ -42,6 +42,7 @@
 | **Space Explorer** | See what fills your disk as bubbles or as a list, then select several items to reveal or remove. |
 | **Uninstaller** | Remove an app with its leftovers in `~/Library`, or reset an app by deleting only its data. |
 | **Performance** | Recommendations first, then detailed managers: maintenance tasks (RAM, DNS, Time Machine snapshots, Spotlight, Mail, Launch Services) with measured gains, login apps and background items. |
+| **History** | Every cleanup, uninstall and maintenance run, item by item: where each file went (Trash or deleted), what was freed over time, with CSV and JSON export. |
 | **Menu bar** | Live Mac health — disk, memory, CPU, battery, network with speed test, connected volumes — plus a search bar for AI Search. |
 
 After every action, TidyMyMac shows what was actually freed, along with a running total.
@@ -89,6 +90,16 @@ own rules with a form — folders, filters, risk level — and test them before 
 Each bubble's area matches the item's size and its colour shows the file type. Double-click a folder to dive in,
 click to select, and move several items to the Trash at once.
 
+### History
+
+<p align="center">
+  <img src="docs/screenshots/10-history.png" alt="History">
+</p>
+
+TidyMyMac keeps a local journal of everything it does: each removed item with its original path, its size and
+whether it went to the Trash or was deleted for good, plus maintenance tasks and their measured gains. Export it to
+CSV or JSON at any time.
+
 ### Performance
 
 <p align="center">
@@ -112,6 +123,9 @@ AI Search indexes and searches **entirely on your Mac**:
 - the index stays in `~/Library/Application Support/TidyMyMac/Search` and can be deleted from the app at any time;
 - searches are neither sent nor stored.
 
+The action history is stored the same way, in `~/Library/Application Support/TidyMyMac/Journal`, and can be cleared
+from the app.
+
 The only network access of AI Search is the one-time model download from Hugging Face (pinned revision, SHA-256
 checked). It sends none of your data. The only other network call in the app is the optional update check against
 GitHub Releases.
@@ -134,8 +148,8 @@ GitHub Releases.
 You need macOS 13 or later and the Command Line Tools (`xcode-select --install`). Xcode itself is not required.
 
 ```sh
-git clone https://github.com/Pareilart/tidyMyMac.git
-cd tidyMyMac
+git clone https://github.com/Pareilart/TidyMyMac.git
+cd TidyMyMac
 ./scripts/setup-signing.sh   # optional, see below
 ./build.sh
 open build/TidyMyMac.app
@@ -215,7 +229,8 @@ for a text and `%lld` for a number.
 
 ## Roadmap
 
-- Restore history and an undo for every cleanup, with a detailed preview and export before deleting.
+- Undo a cleanup and put items back from the Trash, straight from the history.
+- A detailed file-by-file preview, with export, before deleting.
 - More profession profiles (musicians, 3D artists, small IT teams).
 - Visible Time Machine snapshot management and an explanation of “System Data”.
 - Scheduled cleanups per module, plus a command-line tool.

@@ -92,7 +92,7 @@ final class AppNavigation: ObservableObject {
 }
 
 enum Module: String, CaseIterable, Identifiable {
-    case smartScan, search, junk, rules, largeFiles, duplicates, spaceExplorer, uninstaller, performance
+    case smartScan, search, junk, rules, largeFiles, duplicates, spaceExplorer, uninstaller, performance, history
 
     var id: String { rawValue }
 
@@ -107,6 +107,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .spaceExplorer: return localized("Explorateur d'espace")
         case .uninstaller: return localized("Désinstallateur")
         case .performance: return localized("Performances")
+        case .history: return localized("Historique")
         }
     }
 
@@ -121,6 +122,7 @@ enum Module: String, CaseIterable, Identifiable {
         case .spaceExplorer: return "chart.bar.doc.horizontal"
         case .uninstaller: return "xmark.app"
         case .performance: return "speedometer"
+        case .history: return "clock.arrow.circlepath"
         }
     }
 }
@@ -160,6 +162,7 @@ struct ContentView: View {
         case .spaceExplorer: SpaceExplorerView()
         case .uninstaller: UninstallerView()
         case .performance: PerformanceView()
+        case .history: HistoryView()
         }
     }
 }

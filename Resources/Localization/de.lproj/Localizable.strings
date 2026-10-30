@@ -513,3 +513,45 @@
 "Détecté sur ce Mac" = "Auf diesem Mac erkannt";
 
 "Version %@" = "Version %@";
+
+/* Historique */
+"Historique" = "Verlauf";
+"Suivi" = "Aktivität";
+"Tout ce que TidyMyMac a fait sur ce Mac, et ce que vous y avez gagné." = "Alles, was TidyMyMac auf diesem Mac getan hat – und was du dabei gewonnen hast.";
+"Chaque action, élément par élément" = "Jede Aktion, Objekt für Objekt";
+"L'espace libéré au fil du temps" = "Freigegebener Speicher im Zeitverlauf";
+"Export en CSV ou JSON" = "Export als CSV oder JSON";
+"Nettoyage des fichiers inutiles" = "Bereinigung unnötiger Dateien";
+"Gros fichiers mis à la Corbeille" = "Große Dateien in den Papierkorb gelegt";
+"Doublons mis à la Corbeille" = "Duplikate in den Papierkorb gelegt";
+"Éléments retirés depuis l'Explorateur d'espace" = "Objekte aus dem Speicher-Explorer entfernt";
+"Désinstallation de %@" = "%@ deinstalliert";
+"Réinitialisation de %@" = "%@ zurückgesetzt";
+"Entretien" = "Wartung";
+"Éléments de démarrage supprimés" = "Startobjekte entfernt";
+"Apps retirées de l'ouverture de session" = "Apps aus den Anmeldeobjekten entfernt";
+"Dans la Corbeille" = "Im Papierkorb";
+"Supprimé définitivement" = "Endgültig gelöscht";
+"Non supprimé" = "Nicht entfernt";
+"Effacer tout l'historique ?" = "Gesamten Verlauf löschen?";
+"Effacer l'historique" = "Verlauf löschen";
+"Seul l'historique est effacé : les fichiers dans la Corbeille et le total libéré ne changent pas." = "Nur der Verlauf wird gelöscht: Dateien im Papierkorb und die insgesamt freigegebene Menge bleiben unverändert.";
+"Ce mois-ci" = "Diesen Monat";
+"Actions enregistrées" = "Gespeicherte Aktionen";
+"Espace libéré ces 30 derniers jours" = "In den letzten 30 Tagen freigegeben";
+"Toutes les actions" = "Alle Aktionen";
+"Exporter en CSV…" = "Als CSV exportieren …";
+"Exporter en JSON…" = "Als JSON exportieren …";
+"Exporter" = "Exportieren";
+"L'historique reste sur ce Mac et n'est envoyé nulle part." = "Der Verlauf bleibt auf diesem Mac und wird nirgendwohin gesendet.";
+"Afficher le dossier" = "Ordner anzeigen";
+"Aucune action pour l'instant" = "Noch keine Aktionen";
+"Chaque nettoyage, désinstallation ou entretien apparaîtra ici, avec la liste de ce qui a été supprimé. L'historique reste sur ce Mac." = "Jede Bereinigung, Deinstallation und Wartung erscheint hier, mit der Liste dessen, was entfernt wurde. Der Verlauf bleibt auf diesem Mac.";
+"Aujourd'hui" = "Heute";
+"Hier" = "Gestern";
+"%lld élément(s)" = "%lld Objekt(e)";
+"%lld échec(s)" = "%lld Fehler";
+"%@ de mémoire" = "%@ Arbeitsspeicher";
+"… et %lld autres, dans l'export" = "… und %lld weitere im Export";
+"Exporter cette action…" = "Diese Aktion exportieren …";
+"Voir le détail dans l'historique" = "Details im Verlauf ansehen";

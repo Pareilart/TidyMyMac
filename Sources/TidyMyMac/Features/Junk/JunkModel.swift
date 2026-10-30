@@ -41,21 +41,24 @@ final class JunkModel: ObservableObject {
 
     func clean() async {
         phase = .cleaning
-        var failed: [URL] = []
+        var removal = Removal()
+        var candidates: [RemovalCandidate] = []
         for result in results {
-            let urls = result.items.filter(\.selected).map(\.url)
-            guard !urls.isEmpty else { continue }
+            let selected = result.items.filter(\.selected)
+            guard !selected.isEmpty else { continue }
+            let urls = selected.map(\.url)
             let permanently = result.rule.deletesPermanently
-            failed += await Task.detached { Remover.remove(urls, permanently: permanently) }.value
+            removal.merge(await Task.detached { Remover.perform(urls, permanently: permanently) }.value)
+            candidates += selected.map { RemovalCandidate(url: $0.url, size: $0.size, source: result.rule.title) }
         }
-        let failedSet = Set(failed)
         let freed = results
             .flatMap(\.items)
-            .filter { $0.selected && !failedSet.contains($0.url) }
+            .filter { $0.selected && removal.removed.contains($0.url) }
             .totalSize
-        failures = failed
+        failures = removal.failed
         results = []
         Stats.record(freed: freed)
+        ActivityJournal.shared.recordRemoval(.junk, removal: removal, candidates: candidates)
         phase = .done(freed: freed)
     }
 }

@@ -105,13 +105,18 @@ final class AppsModel: ObservableObject {
             running.terminate()
         }
         try? await Task.sleep(nanoseconds: 1_000_000_000)
-        let targets = [app.url] + leftovers.filter(\.selected).map(\.url)
+        let candidates = [RemovalCandidate(url: app.url, size: app.size)]
+            + leftovers.filter(\.selected).map { RemovalCandidate(url: $0.url, size: $0.size) }
         let freed = app.size + leftovers.selectedSize
-        let failed = Remover.remove(targets, permanently: false)
-        var succeeded = true
-        if !failed.isEmpty {
-            succeeded = await Remover.recycleWithFinder(failed)
+        var removal = Remover.perform(candidates.map(\.url), permanently: false)
+        if !removal.failed.isEmpty {
+            // Les éléments protégés passent par le Finder, qui demande le mot de passe.
+            let retried = await Remover.recycleWithFinder(removal.failed)
+            removal.failed = []
+            removal.merge(retried)
         }
+        ActivityJournal.shared.recordRemoval(.uninstall, subject: app.name, removal: removal, candidates: candidates)
+        let succeeded = removal.failed.isEmpty
         if succeeded {
             apps.removeAll { $0.id == app.id }
             selection = nil
@@ -125,10 +130,14 @@ final class AppsModel: ObservableObject {
     /// Supprime les données de l'application sans toucher à l'application elle-même.
     func reset(_ app: InstalledApp) async {
         let selected = leftovers.filter(\.selected)
-        let failed = Remover.remove(selected.map(\.url), permanently: false)
-        let failedSet = Set(failed)
-        let freed = selected.filter { !failedSet.contains($0.url) }.totalSize
+        let removal = Remover.perform(selected.map(\.url), permanently: false)
+        let failed = removal.failed
+        let freed = selected.filter { removal.removed.contains($0.url) }.totalSize
         Stats.record(freed: freed)
+        ActivityJournal.shared.recordRemoval(
+            .appReset, subject: app.name, removal: removal,
+            candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
+        )
         loadLeftovers()
         message = failed.isEmpty
             ? localized("Les données de \(app.name) ont été placées dans la Corbeille : \(freed.formattedBytes) libérés.")

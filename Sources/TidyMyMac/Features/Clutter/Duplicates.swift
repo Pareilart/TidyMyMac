@@ -101,12 +101,14 @@ final class DuplicatesModel: ObservableObject {
         }
         let selected = groups.flatMap(\.files).filter(\.selected)
         let urls = selected.map(\.url)
-        let failed = await Task.detached { Remover.remove(urls, permanently: false) }.value
-        let failedSet = Set(failed)
-        let freed = selected.filter { !failedSet.contains($0.url) }.totalSize
-        failures = failed
+        let removal = await Task.detached { Remover.perform(urls, permanently: false) }.value
+        let freed = selected.filter { removal.removed.contains($0.url) }.totalSize
+        failures = removal.failed
         groups = []
         Stats.record(freed: freed)
+        ActivityJournal.shared.recordRemoval(
+            .duplicates, removal: removal, candidates: selected.map { RemovalCandidate(url: $0.url, size: $0.size) }
+        )
         phase = .done(freed: freed)
     }
 }

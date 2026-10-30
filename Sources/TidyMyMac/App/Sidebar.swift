@@ -13,6 +13,7 @@ struct ModuleSection: Identifiable {
         ModuleSection(title: localized("Encombrement"), modules: [.largeFiles, .duplicates, .spaceExplorer]),
         ModuleSection(title: localized("Applications"), modules: [.uninstaller]),
         ModuleSection(title: localized("Performances"), modules: [.performance]),
+        ModuleSection(title: localized("Suivi"), modules: [.history]),
     ] }
 }
 
@@ -32,7 +33,7 @@ struct Sidebar: View {
                             .font(.system(size: 10, weight: .bold, design: .rounded))
                             .foregroundColor(.secondary)
                             .padding(.horizontal, 12)
-                            .padding(.top, 12)
+                            .padding(.top, 10)
                             .padding(.bottom, 2)
                         ForEach(section.modules) { module in
                             SidebarItem(module: module, selected: (navigation.selection ?? .smartScan) == module) {
@@ -149,7 +150,7 @@ private struct SidebarItem: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 11) {
-                IconTile(symbol: module.icon, tint: module.info.accent, size: 28)
+                IconTile(symbol: module.icon, tint: module.info.accent, size: 26)
                 Text(module.title)
                     .font(.system(size: 13.5, weight: selected ? .semibold : .medium, design: .rounded))
                     .foregroundColor(selected ? .primary : .primary.opacity(0.8))
@@ -158,7 +159,7 @@ private struct SidebarItem: View {
                 Spacer(minLength: 0)
             }
             .padding(.horizontal, 8)
-            .padding(.vertical, 6)
+            .padding(.vertical, 5)
             .background(
                 RoundedRectangle(cornerRadius: 11, style: .continuous)
                     .fill(selected ? Color.white.opacity(0.10) : .clear)

@@ -513,3 +513,45 @@
 "Détecté sur ce Mac" = "Detected on this Mac";
 
 "Version %@" = "Version %@";
+
+/* Historique */
+"Historique" = "History";
+"Suivi" = "Activity";
+"Tout ce que TidyMyMac a fait sur ce Mac, et ce que vous y avez gagné." = "Everything TidyMyMac did on this Mac, and what you gained.";
+"Chaque action, élément par élément" = "Every action, item by item";
+"L'espace libéré au fil du temps" = "Space freed over time";
+"Export en CSV ou JSON" = "Export to CSV or JSON";
+"Nettoyage des fichiers inutiles" = "Junk Files cleanup";
+"Gros fichiers mis à la Corbeille" = "Large files moved to the Trash";
+"Doublons mis à la Corbeille" = "Duplicates moved to the Trash";
+"Éléments retirés depuis l'Explorateur d'espace" = "Items removed from Space Explorer";
+"Désinstallation de %@" = "Uninstalled %@";
+"Réinitialisation de %@" = "Reset %@";
+"Entretien" = "Maintenance";
+"Éléments de démarrage supprimés" = "Startup items removed";
+"Apps retirées de l'ouverture de session" = "Apps removed from login";
+"Dans la Corbeille" = "In the Trash";
+"Supprimé définitivement" = "Deleted permanently";
+"Non supprimé" = "Not removed";
+"Effacer tout l'historique ?" = "Clear the whole history?";
+"Effacer l'historique" = "Clear History";
+"Seul l'historique est effacé : les fichiers dans la Corbeille et le total libéré ne changent pas." = "Only the history is cleared: files in the Trash and the total freed stay as they are.";
+"Ce mois-ci" = "This month";
+"Actions enregistrées" = "Recorded actions";
+"Espace libéré ces 30 derniers jours" = "Space freed over the last 30 days";
+"Toutes les actions" = "All Actions";
+"Exporter en CSV…" = "Export as CSV…";
+"Exporter en JSON…" = "Export as JSON…";
+"Exporter" = "Export";
+"L'historique reste sur ce Mac et n'est envoyé nulle part." = "The history stays on this Mac and is never sent anywhere.";
+"Afficher le dossier" = "Show Folder";
+"Aucune action pour l'instant" = "No actions yet";
+"Chaque nettoyage, désinstallation ou entretien apparaîtra ici, avec la liste de ce qui a été supprimé. L'historique reste sur ce Mac." = "Every cleanup, uninstall or maintenance run will show up here, with the list of what was removed. The history stays on this Mac.";
+"Aujourd'hui" = "Today";
+"Hier" = "Yesterday";
+"%lld élément(s)" = "%lld item(s)";
+"%lld échec(s)" = "%lld failure(s)";
+"%@ de mémoire" = "%@ of memory";
+"… et %lld autres, dans l'export" = "… and %lld more in the export";
+"Exporter cette action…" = "Export This Action…";
+"Voir le détail dans l'historique" = "See Details in History";

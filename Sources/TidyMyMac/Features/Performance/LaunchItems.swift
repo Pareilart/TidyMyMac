@@ -64,17 +64,12 @@ struct LaunchItem: Identifiable, Sendable {
     }
 
     /// Arrête puis supprime les éléments. Les éléments globaux et système partagent une seule demande de mot de passe.
-    static func remove(_ items: [LaunchItem]) -> Set<URL> {
+    static func remove(_ items: [LaunchItem]) -> Removal {
         let userDomain = "gui/\(getuid())"
-        var removed = Set<URL>()
         for item in items where item.scope != .systemDaemon {
             Shell.run("/bin/launchctl", ["bootout", userDomain, item.url.path])
         }
-        for item in items where item.scope == .userAgent {
-            if Remover.remove([item.url], permanently: false).isEmpty {
-                removed.insert(item.url)
-            }
-        }
+        var removal = Remover.perform(items.filter { $0.scope == .userAgent }.map(\.url), permanently: false)
         let privileged = items.filter { $0.scope != .userAgent }
         if !privileged.isEmpty {
             let script = privileged.map { item -> String in
@@ -83,11 +78,15 @@ struct LaunchItem: Identifiable, Sendable {
                 return "\(stop)/bin/rm -f \(path)"
             }.joined(separator: "; ")
             Shell.admin(script)
-            for item in privileged where !FileManager.default.fileExists(atPath: item.url.path) {
-                removed.insert(item.url)
+            for item in privileged {
+                if FileManager.default.fileExists(atPath: item.url.path) {
+                    removal.failed.append(item.url)
+                } else {
+                    removal.deleted.append(item.url)
+                }
             }
         }
-        return removed
+        return removal
     }
 }
 
@@ -158,7 +157,13 @@ final class LaunchItemsModel: ObservableObject {
     }
 
     func remove(_ targets: [LaunchItem]) async {
-        let removed = await Task.detached { LaunchItem.remove(targets) }.value
+        let sizes = Dictionary(uniqueKeysWithValues: targets.map { ($0.url, FS.fileSize($0.url)) })
+        let removal = await Task.detached { LaunchItem.remove(targets) }.value
+        let removed = removal.removed
+        ActivityJournal.shared.recordRemoval(
+            .launchItems, removal: removal,
+            candidates: targets.map { RemovalCandidate(url: $0.url, size: sizes[$0.url] ?? 0, source: $0.label) }
+        )
         items.removeAll { removed.contains($0.url) }
         lastActionMessage = removed.count == targets.count
             ? localized("\(removed.count) élément(s) supprimé(s).")
@@ -167,6 +172,10 @@ final class LaunchItemsModel: ObservableObject {
 
     func removeLoginItems(_ targets: [LoginItem]) async {
         let removed = await Task.detached { LoginItem.remove(targets) }.value
+        ActivityJournal.shared.record(JournalEntry(
+            kind: .loginItems,
+            steps: targets.map { JournalStep(title: $0.name, detail: $0.path, succeeded: removed.contains($0.name)) }
+        ))
         loginItems.removeAll { removed.contains($0.name) }
         lastActionMessage = localized("\(removed.count) app(s) ne s'ouvriront plus au démarrage.")
     }

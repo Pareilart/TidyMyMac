@@ -97,6 +97,16 @@ extension Module {
                     ModuleFeature(icon: "arrow.counterclockwise", text: localized("Réinitialisation sans désinstaller")),
                 ]
             )
+        case .history:
+            return ModuleInfo(
+                tagline: localized("Tout ce que TidyMyMac a fait sur ce Mac, et ce que vous y avez gagné."),
+                accent: Theme.lavender, heroSymbol: "clock.arrow.circlepath", actionTitle: localized("Ouvrir"),
+                features: [
+                    ModuleFeature(icon: "list.bullet.rectangle", text: localized("Chaque action, élément par élément")),
+                    ModuleFeature(icon: "chart.bar", text: localized("L'espace libéré au fil du temps")),
+                    ModuleFeature(icon: "square.and.arrow.up", text: localized("Export en CSV ou JSON")),
+                ]
+            )
         case .performance:
             return ModuleInfo(
                 tagline: localized("Des recommandations et des outils pour un Mac plus réactif."),

@@ -80,11 +80,15 @@ final class SpaceExplorerModel: ObservableObject {
     }
 
     func trash(_ targets: [SizedEntry]) {
-        let failed = Set(Remover.remove(targets.map(\.url), permanently: false))
-        let removed = targets.filter { !failed.contains($0.url) }
+        let removal = Remover.perform(targets.map(\.url), permanently: false)
+        let failed = removal.failed
+        let removed = targets.filter { removal.removed.contains($0.url) }
         let removedURLs = Set(removed.map(\.url))
         let freed = removed.reduce(0) { $0 + $1.size }
         Stats.record(freed: freed)
+        ActivityJournal.shared.recordRemoval(
+            .spaceExplorer, removal: removal, candidates: targets.map { RemovalCandidate(url: $0.url, size: $0.size) }
+        )
         entries.removeAll { removedURLs.contains($0.url) }
         selection.subtract(removedURLs)
         // Les tailles des dossiers parents ne sont plus à jour.

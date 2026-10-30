@@ -72,33 +72,66 @@ enum FS {
 
 // MARK: - Suppression
 
+/// Ce qu'est devenu chaque élément d'une suppression.
+struct Removal: Sendable {
+    var trashed: [URL] = []
+    /// Emplacement de chaque élément dans la Corbeille, quand macOS l'indique.
+    var trashLocations: [URL: URL] = [:]
+    var deleted: [URL] = []
+    var failed: [URL] = []
+
+    var removed: Set<URL> { Set(trashed).union(deleted) }
+
+    mutating func merge(_ other: Removal) {
+        trashed += other.trashed
+        trashLocations.merge(other.trashLocations) { _, new in new }
+        deleted += other.deleted
+        failed += other.failed
+    }
+}
+
 enum Remover {
     static var deletePermanently: Bool { UserDefaults.standard.bool(forKey: "deletePermanently") }
 
-    /// Supprime ou place dans la Corbeille. Retourne les éléments qui n'ont pas pu être traités.
-    static func remove(_ urls: [URL], permanently: Bool) -> [URL] {
-        var failed: [URL] = []
+    /// Supprime ou place dans la Corbeille, en notant l'emplacement de chaque élément dans la Corbeille.
+    static func perform(_ urls: [URL], permanently: Bool) -> Removal {
+        var removal = Removal()
         for url in urls {
             do {
                 if permanently {
                     try FileManager.default.removeItem(at: url)
+                    removal.deleted.append(url)
                 } else {
-                    try FileManager.default.trashItem(at: url, resultingItemURL: nil)
+                    var location: NSURL?
+                    try FileManager.default.trashItem(at: url, resultingItemURL: &location)
+                    removal.trashed.append(url)
+                    removal.trashLocations[url] = location as URL?
                 }
             } catch {
-                failed.append(url)
+                removal.failed.append(url)
             }
         }
-        return failed
+        return removal
     }
 
     /// Passe par le Finder, qui demande le mot de passe administrateur si nécessaire.
     @MainActor
-    static func recycleWithFinder(_ urls: [URL]) async -> Bool {
-        guard !urls.isEmpty else { return true }
+    static func recycleWithFinder(_ urls: [URL]) async -> Removal {
+        guard !urls.isEmpty else { return Removal() }
         return await withCheckedContinuation { continuation in
-            NSWorkspace.shared.recycle(urls) { _, error in
-                continuation.resume(returning: error == nil)
+            NSWorkspace.shared.recycle(urls) { newURLs, error in
+                var removal = Removal()
+                for url in urls {
+                    if let location = newURLs[url] {
+                        removal.trashed.append(url)
+                        removal.trashLocations[url] = location
+                    } else if error == nil {
+                        removal.trashed.append(url)
+                    } else {
+                        removal.failed.append(url)
+                    }
+                }
+                continuation.resume(returning: removal)
             }
         }
     }

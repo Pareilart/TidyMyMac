@@ -6,6 +6,19 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+### Ajouté
+
+- Historique des actions : chaque nettoyage, désinstallation, entretien et suppression d'éléments de démarrage est
+  enregistré sur le Mac (`~/Library/Application Support/TidyMyMac/Journal`), élément par élément : chemin d'origine,
+  taille, Corbeille ou suppression définitive, emplacement dans la Corbeille. Écran « Historique » avec l'espace libéré
+  sur 30 jours, le détail de chaque action et l'export CSV ou JSON.
+- Bouton « Voir le détail dans l'historique » après un nettoyage.
+
+### Modifié
+
+- Barre latérale plus compacte : tous les modules tiennent dans la fenêtre à sa taille par défaut.
+- Captures d'écran : le total libéré affiché est fictif, et non plus celui du Mac qui les génère.
+
 ## [0.2.0] - 2026-10-30
 
 ### Ajouté

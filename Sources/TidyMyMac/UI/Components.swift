@@ -80,6 +80,7 @@ struct DonePrompt: View {
     let failures: [URL]
     let again: () -> Void
     @AppStorage(Stats.totalFreedKey) private var totalFreed = 0
+    @EnvironmentObject private var navigation: AppNavigation
 
     var body: some View {
         VStack(spacing: 14) {
@@ -104,7 +105,10 @@ struct DonePrompt: View {
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
             }
-            Button("Analyser à nouveau", action: again)
+            HStack(spacing: 12) {
+                Button("Analyser à nouveau", action: again)
+                Button("Voir le détail dans l'historique") { navigation.selection = .history }
+            }
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
