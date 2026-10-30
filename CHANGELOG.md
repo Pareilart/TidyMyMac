@@ -6,6 +6,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+## [0.5.0] - 2026-10-30
+
 ### Ajouté
 
 - Plan de nettoyage : avant de nettoyer les fichiers inutiles, y compris depuis l'Analyse intelligente, la liste de tout
