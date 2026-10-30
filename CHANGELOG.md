@@ -6,6 +6,8 @@ Le format suit [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) et les n
 
 ## [Non publié]
 
+## [0.6.0] - 2026-10-30
+
 ### Ajouté
 
 - Page « Comment ça marche » : ce que TidyMyMac fait, ce qu'il ne fait pas, quand un nettoyage ne sert à rien et comment
